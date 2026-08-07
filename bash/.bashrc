@@ -24,8 +24,6 @@ eval "$(starship init bash)"
 alias ta="toggle-audio"
 alias cbl="codeblocks-light"
 alias kh="kitty-hotkeys"
-
-# Use bat instead of cat
 alias cat='bat'
 
 # avro keyboard
