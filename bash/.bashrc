@@ -12,6 +12,12 @@ PS1='[\u@\h \W]\$ '
 # path for ~/.local/bin
 export PATH="$HOME/.local/bin:$PATH"
 
+# Default text editor
+# Many terminal programs (e.g. Yazi, Git, crontab) look at these
+# environment variables to decide which editor to launch.
+export EDITOR="nvim"
+export VISUAL="nvim"
+
 # starship
 eval "$(starship init bash)"
 
