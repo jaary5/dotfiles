@@ -1,7 +1,5 @@
 # Global Super+C / Super+V Copy & Paste
 
-## Overview
-
 
 | Key       | Action |
 | --------- | ------ |
