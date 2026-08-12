@@ -25,6 +25,7 @@ alias ta="toggle-audio"
 alias cbl="codeblocks-light"
 alias kh="kitty-hotkeys"
 alias cat='bat'
+alias po='poweroff'
 
 # avro keyboard
 export GTK_IM_MODULE=ibus
