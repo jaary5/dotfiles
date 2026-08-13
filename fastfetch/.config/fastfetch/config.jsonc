@@ -1,0 +1,225 @@
+// {
+//   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+//   "modules": [
+//     "title",
+//     "separator",
+//     "os",
+//     "host",
+//     "kernel",
+//     "uptime",
+//     "packages",
+//     "shell",
+//     "display",
+//     "de",
+//     "wm",
+//     "wmtheme",
+//     "theme",
+//     "icons",
+//     "font",
+//     "cursor",
+//     "terminal",
+//     "terminalfont",
+//     "cpu",
+//     "gpu",
+//     "memory",
+//     "swap",
+//     "disk",
+//     "localip",
+//     "battery",
+//     "poweradapter",
+//     "locale",
+//     "break",
+//     "colors"
+//   ]
+// }
+
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "logo": {
+    "source": "~/.config/fastfetch/arch.txt",
+    "type": "file",
+    "padding": {
+      "top": 1,
+      "right": 0,
+      "left": 0
+    }
+  },
+
+  "display": {
+    "separator": " "
+  },
+
+  "modules": [
+    {
+      "type": "title",
+      "outputColor": "white",
+      "format": "\u001b[90m┌──────────────────────────────────────────────────────────────┐"
+    },
+
+    {
+      "type": "host",
+      "key": " Host",
+      "keyColor": "green",
+      "format": "{name}"
+    },
+
+    {
+      "type": "display",
+      "key": "│󰹑 Display",
+      "keyColor": "green",
+      "format": "{name} {width}x{height} @ {refresh-rate}Hz {inch}″"
+    },
+
+    {
+      "type": "cpu",
+      "key": "│󰻠 CPU",
+      "keyColor": "green",
+      "format": "{name}"
+    },
+
+    {
+      "type": "gpu",
+      "key": "│󰍛 GPU",
+      "keyColor": "green",
+      "format": "{vendor} {name}"
+    },
+
+    {
+      "type": "memory",
+      "key": "│󰘚 RAM",
+      "keyColor": "green"
+    },
+
+    {
+      "type": "swap",
+      "key": "│󰓡 Swap",
+      "keyColor": "green"
+    },
+
+    {
+      "type": "disk",
+      "key": "│󰋊 Disk",
+      "keyColor": "green",
+      "format": "{size-used} / {size-total} ({size-percentage}) {filesystem}"
+    },
+
+    {
+      "type": "custom",
+      "format": "\u001b[90m├──────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "os",
+      "key": "󰌽 OS",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "kernel",
+      "key": "│ Kernel",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "uptime",
+      "key": "│󰔚 Uptime",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "packages",
+      "key": "│󰏖 Packages",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "shell",
+      "key": "│ Shell",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "de",
+      "key": "│ DE",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "wm",
+      "key": "│ WM",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "wmtheme",
+      "key": "│󰉼 WM Theme",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "theme",
+      "key": "│󰏘 Theme",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "icons",
+      "key": "│󰀻 Icons",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "font",
+      "key": "│󰛖 Font",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "cursor",
+      "key": "│󰇀 Cursor",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "terminal",
+      "key": "│ Terminal",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "terminalfont",
+      "key": "│󰛖 Terminal Font",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "localip",
+      "key": "│󰩟 Local IP",
+      "keyColor": "yellow"
+    },
+
+    {
+      "type": "locale",
+      "key": "│󰗊 Locale",
+      "keyColor": "yellow"
+    },
+
+    // {
+    //   "type": "custom",
+    //   "format": "\u001b[90m├──────────────────────────────────────────────────────────────┤"
+    // },
+    //
+    // {
+    //   "type": "command",
+    //   "key": "│ age",
+    //   "keycolor": "yellow",
+    //   "text": "echo $((($(date +%s) - $(stat -c %w /)) / 86400)) days"
+    // },
+    //
+    {
+      "type": "title",
+      "format": "\u001b[90m└──────────────────────────────────────────────────────────────┘"
+    }
+  ]
+}
