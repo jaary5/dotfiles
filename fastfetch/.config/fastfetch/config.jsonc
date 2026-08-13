@@ -112,97 +112,97 @@
     {
       "type": "os",
       "key": "󰌽 OS",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "kernel",
       "key": "│ Kernel",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "uptime",
       "key": "│󰔚 Uptime",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "packages",
       "key": "│󰏖 Packages",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "shell",
       "key": "│ Shell",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "de",
       "key": "│ DE",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "wm",
       "key": "│ WM",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "wmtheme",
       "key": "│󰉼 WM Theme",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "theme",
       "key": "│󰏘 Theme",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "icons",
       "key": "│󰀻 Icons",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "font",
       "key": "│󰛖 Font",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "cursor",
       "key": "│󰇀 Cursor",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "terminal",
       "key": "│ Terminal",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "terminalfont",
       "key": "│󰛖 Terminal Font",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "localip",
       "key": "│󰩟 Local IP",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     {
       "type": "locale",
       "key": "│󰗊 Locale",
-      "keyColor": "yellow"
+      "keyColor": "magenta"
     },
 
     // {
