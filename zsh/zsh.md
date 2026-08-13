@@ -2,7 +2,7 @@
 
 A minimal, modular Zsh setup for Arch Linux, managed with GNU Stow inspired from https://github.com/radleylewis/zsh
 
-# Quick Install
+## Quick Install
 
 ### Step 1: Install packages (Arch Linux)
 
