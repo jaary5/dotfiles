@@ -12,7 +12,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 # Personal binaries
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 
 
 # IBus / Avro keyboard
