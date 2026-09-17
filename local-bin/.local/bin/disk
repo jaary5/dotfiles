@@ -1,0 +1,325 @@
+#!/usr/bin/env bash
+
+show_header() {
+  echo
+  echo "╭────────────────────────────────────────────╮"
+  echo "│               ARCH DISK TOOL               │"
+  echo "╰────────────────────────────────────────────╯"
+  echo
+}
+
+# Print directory size, showing 0B if the directory is missing/empty
+dir_size() {
+  local dir="$1"
+
+  if [ -d "$dir" ]; then
+    du -sh "$dir" 2>/dev/null | cut -f1
+  else
+    echo "N/A"
+  fi
+}
+
+# ─────────────────────────────────────────────
+# DISK REPORT
+# ─────────────────────────────────────────────
+
+check_disk() {
+  echo "▸ Filesystem"
+
+  df -h / | awk '
+    NR==1 {
+        printf "  %-22s %-8s %-8s %-8s\n", "Filesystem", "Size", "Used", "Use%"
+    }
+    NR==2 {
+        printf "  %-22s %-8s %-8s %-8s\n", $1, $2, $3, $5
+    }
+    '
+
+  echo
+
+  echo "▸ Cleanup targets"
+
+  printf "  %-22s %-9s %s\n" \
+    "Pacman cache" \
+    "$(sudo du -sh /var/cache/pacman/pkg 2>/dev/null | cut -f1)" \
+    "/var/cache/pacman/pkg"
+
+  printf "  %-22s %-9s %s\n" \
+    "yay cache" \
+    "$(dir_size "$HOME/.cache/yay")" \
+    "~/.cache/yay"
+
+  printf "  %-22s %-9s %s\n" \
+    "VS Code C/C++ cache" \
+    "$(dir_size "$HOME/.cache/vscode-cpptools")" \
+    "~/.cache/vscode-cpptools"
+
+  printf "  %-22s %-9s %s\n" \
+    "Brave cache" \
+    "$(dir_size "$HOME/.cache/BraveSoftware")" \
+    "~/.cache/BraveSoftware"
+
+  printf "  %-22s %-9s %s\n" \
+    "Thumbnail cache" \
+    "$(dir_size "$HOME/.cache/thumbnails")" \
+    "~/.cache/thumbnails"
+
+  printf "  %-22s %-9s %s\n" \
+    "Flatpak" \
+    "$(sudo du -sh /var/lib/flatpak 2>/dev/null | cut -f1)" \
+    "/var/lib/flatpak"
+
+  echo
+
+  echo "▸ Systemd journal"
+  journalctl --disk-usage
+
+  echo
+
+  echo "▸ General cache hotspots"
+
+  if [ -d "$HOME/.cache" ]; then
+    du -xh --max-depth=1 "$HOME/.cache" 2>/dev/null |
+      sort -hr |
+      head -10 |
+      awk '{print "  " $0}'
+  else
+    echo "  ~/.cache does not exist"
+  fi
+
+  echo
+
+  echo "▸ Common application data"
+
+  for dir in \
+    "$HOME/.local/share" \
+    "$HOME/.config" \
+    "$HOME/.vscode" \
+    "$HOME/.npm" \
+    "$HOME/.bun" \
+    "$HOME/.nuget"; do
+    if [ -e "$dir" ]; then
+      du -sh "$dir" 2>/dev/null
+    fi
+  done |
+    sort -hr |
+    awk '{print "  " $0}'
+
+  echo
+
+  echo "▸ System hotspots"
+
+  sudo du -xh --max-depth=1 /var 2>/dev/null |
+    sort -hr |
+    head -8 |
+    awk '{print "  " $0}'
+
+  echo
+
+  echo "▸ Largest home directories"
+
+  du -xh --max-depth=1 "$HOME" 2>/dev/null |
+    sort -hr |
+    head -12 |
+    awk '{print "  " $0}'
+
+  echo
+
+  echo "──────────────────────────────────────────────"
+  echo "  Disk check complete. No files were deleted."
+  echo "──────────────────────────────────────────────"
+}
+
+# ─────────────────────────────────────────────
+# CLEANUP FUNCTIONS
+# ─────────────────────────────────────────────
+
+clean_pacman() {
+  echo
+  echo "▸ Pacman cache"
+  sudo paccache -d
+
+  read -r -p "Remove old cached packages? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    sudo paccache -r
+    echo "  Done."
+  fi
+}
+
+clean_yay() {
+  echo
+  echo "▸ yay build cache"
+  echo "  Location: ~/.cache/yay"
+  echo "  Size: $(dir_size "$HOME/.cache/yay")"
+
+  if [ ! -d "$HOME/.cache/yay" ]; then
+    echo "  Cache does not exist."
+    return
+  fi
+
+  read -r -p "Clear yay build cache? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    rm -rf "$HOME/.cache/yay/"*
+    echo "  Done."
+  fi
+}
+
+clean_vscode_cpp() {
+  echo
+  echo "▸ VS Code C/C++ cache"
+  echo "  Location: ~/.cache/vscode-cpptools"
+  echo "  Size: $(dir_size "$HOME/.cache/vscode-cpptools")"
+
+  if [ ! -d "$HOME/.cache/vscode-cpptools" ]; then
+    echo "  Cache does not exist."
+    return
+  fi
+
+  read -r -p "Clear VS Code C/C++ cache? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    rm -rf "$HOME/.cache/vscode-cpptools/"*
+    echo "  Done."
+  fi
+}
+
+clean_brave() {
+  echo
+  echo "▸ Brave cache"
+  echo "  Location: ~/.cache/BraveSoftware"
+  echo "  Size: $(dir_size "$HOME/.cache/BraveSoftware")"
+  echo "  Make sure Brave is closed."
+
+  if [ ! -d "$HOME/.cache/BraveSoftware" ]; then
+    echo "  Cache does not exist."
+    return
+  fi
+
+  read -r -p "Clear Brave cache? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    rm -rf "$HOME/.cache/BraveSoftware/"*
+    echo "  Done."
+  fi
+}
+
+clean_thumbnails() {
+  echo
+  echo "▸ Thumbnail cache"
+  echo "  Location: ~/.cache/thumbnails"
+  echo "  Size: $(dir_size "$HOME/.cache/thumbnails")"
+
+  if [ ! -d "$HOME/.cache/thumbnails" ]; then
+    echo "  Cache does not exist."
+    return
+  fi
+
+  read -r -p "Clear thumbnail cache? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    rm -rf "$HOME/.cache/thumbnails/"*
+    echo "  Done."
+  fi
+}
+
+clean_flatpak() {
+  echo
+  echo "▸ Unused Flatpak runtimes"
+  echo "  Location: /var/lib/flatpak"
+  echo "  Size: $(sudo du -sh /var/lib/flatpak 2>/dev/null | cut -f1)"
+  echo
+
+  read -r -p "Remove unused Flatpak runtimes? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    flatpak uninstall --unused
+    echo "  Done."
+  fi
+}
+
+clean_journal() {
+  echo
+  echo "▸ Systemd journal"
+  journalctl --disk-usage
+  echo
+
+  read -r -p "Limit journal to 500M? [y/N] " answer
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    sudo journalctl --vacuum-size=500M
+    echo "  Done."
+  fi
+}
+
+# ─────────────────────────────────────────────
+# CLEANUP MENU
+# ─────────────────────────────────────────────
+
+clean_menu() {
+  echo
+  echo "╭────────────────────────────────────────────╮"
+  echo "│              CLEANUP OPTIONS               │"
+  echo "╰────────────────────────────────────────────╯"
+  echo
+  echo "  1) Pacman cache"
+  echo "  2) yay build cache"
+  echo "  3) VS Code C/C++ cache"
+  echo "  4) Brave cache"
+  echo "  5) Thumbnail cache"
+  echo "  6) Unused Flatpak runtimes"
+  echo "  7) Systemd journal"
+  echo "  8) Run ALL"
+  echo "  q) Quit"
+  echo
+
+  read -r -p "Select: " choice
+
+  case "$choice" in
+  1) clean_pacman ;;
+  2) clean_yay ;;
+  3) clean_vscode_cpp ;;
+  4) clean_brave ;;
+  5) clean_thumbnails ;;
+  6) clean_flatpak ;;
+  7) clean_journal ;;
+
+  8)
+    clean_pacman
+    clean_yay
+    clean_vscode_cpp
+    clean_brave
+    clean_thumbnails
+    clean_flatpak
+    clean_journal
+    ;;
+
+  q | Q)
+    echo
+    echo "Done."
+    exit 0
+    ;;
+
+  *)
+    echo
+    echo "Invalid option."
+    ;;
+  esac
+}
+
+# ─────────────────────────────────────────────
+# MAIN
+# ─────────────────────────────────────────────
+
+show_header
+
+sudo -v || exit 1
+
+# Always report first
+check_disk
+
+# Then keep showing cleanup menu
+while true; do
+  clean_menu
+done
