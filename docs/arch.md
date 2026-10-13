@@ -15,37 +15,28 @@
 
 ##  Search and install
 
-<table>
-<thead><tr><th style="white-space: nowrap">Command</th><th>What it does</th></tr></thead>
-<tbody>
-<tr><td style="white-space: nowrap"><code>yay package</code></td><td>Search for matching packages interactively; choose a result to install if prompted.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -Ss package</code></td><td>Search official repositories and the AUR for matching packages.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -G package</code></td><td>Download an AUR package's build files without installing it. Use this to inspect its <code>PKGBUILD</code>.</td></tr>
-</tbody>
-</table>
+| Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | What it does |
+| :--- | :--- |
+| `yay package` | Search for matching packages interactively; choose a result to install if prompted. |
+| `yay -Ss package` | Search official repositories and the AUR for matching packages. |
+| `yay -G package` | Download an AUR package's build files without installing it. Use this to inspect its `PKGBUILD`. |
 
 **Note:** `yay package` is an interactive search-and-install workflow. Check the package name and repository prefix (`extra/`, `core/`, `multilib/`, or `aur/`) before choosing.
 
 ##  Check installed packages
 
-<table>
-<thead><tr><th style="white-space: nowrap">Command</th><th>What it does</th></tr></thead>
-<tbody>
-<tr><td style="white-space: nowrap"><code>yay -Q package</code></td><td>Check if a package is installed with version.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -Qs package</code></td><td>Check if a package is installed with version + One line info.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -Qi package</code></td><td>Show detailed information about an installed package, including version, dependencies, install date, and install reason.</td></tr>
-</tbody>
-</table>
+| Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | What it does |
+| :--- | :--- |
+| `yay -Q package` | Check if a package is installed with version. |
+| `yay -Qs package` | Check if a package is installed with version + One line info. |
+| `yay -Qi package` | Show detailed information about an installed package, including version, dependencies, install date, and install reason. |
 
 
 ##  Upgrade the system
 
-<table>
-<thead><tr><th style="white-space: nowrap">Command</th><th>What it does</th></tr></thead>
-<tbody>
-<tr><td style="white-space: nowrap"><code>yay -Syu</code></td><td>Refresh repository databases as needed and perform a full system upgrade, including applicable AUR package updates.</td></tr>
-</tbody>
-</table>
+| Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | What it does |
+| :--- | :--- |
+| `yay -Syu` | Refresh repository databases as needed and perform a full system upgrade, including applicable AUR package updates. |
 
 Use `yay -Syu` for routine full system upgrades.
 
@@ -53,14 +44,11 @@ Arch Linux does not support partial upgrades, so avoid using `yay -Sy package` t
 
 ##  Remove packages
 
-<table>
-<thead><tr><th style="white-space: nowrap">Command</th><th>What it does</th></tr></thead>
-<tbody>
-<tr><td style="white-space: nowrap"><code>yay -R package</code></td><td>Remove the package, leaving dependencies behind.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -Rs package</code></td><td>Remove the package and dependencies that are no longer required.</td></tr>
-<tr><td style="white-space: nowrap"><code>yay -Rns package</code></td><td>Remove the package, unneeded dependencies, and package-managed backup configuration files where applicable.</td></tr>
-</tbody>
-</table>
+| Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | What it does |
+| :--- | :--- |
+| `yay -R package` | Remove the package, leaving dependencies behind. |
+| `yay -Rs package` | Remove the package and dependencies that are no longer required. |
+| `yay -Rns package` | Remove the package, unneeded dependencies, and package-managed backup configuration files where applicable. |
 
 For ordinary removal, `-Rns` is often a convenient choice. Read the proposed removal list before confirming.
 
