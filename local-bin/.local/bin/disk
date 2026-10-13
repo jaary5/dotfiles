@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# never knew ncdu existed :(
+
 show_header() {
   echo
   echo "╭────────────────────────────────────────────╮"
