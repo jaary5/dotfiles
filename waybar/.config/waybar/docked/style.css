@@ -1,0 +1,155 @@
+@import "./colors.css";
+
+* {
+  border: none;
+  font-family: "CaskaydiaCove Nerd Font";
+  font-weight: 700;
+  font-size: 13px;
+  color: @foreground;
+}
+
+window#waybar {
+  background: @background;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+window#waybar > box {
+  margin: 0;
+  padding: 0;
+  background-color: @background;
+  border-radius: 0;
+  border: none;
+  opacity: 0.97;
+}
+
+tooltip {
+  background: @background;
+  border: 1px solid @selected;
+  border-radius: 10px;
+}
+
+#idle_inhibitor,
+#workspaces,
+#window,
+#cpu,
+#temperature,
+#memory,
+#clock,
+#network,
+#tray,
+#privacy,
+#language,
+#pulseaudio,
+#backlight,
+#power-profiles-daemon,
+#battery,
+#custom-power {
+  opacity: 1;
+  padding: 0 2px;
+  margin: 0 3px;
+}
+
+#idle_inhibitor {
+  padding-left: 2px;
+  padding-right: 5px;
+  margin-left: 5px;
+  margin-right: 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+#idle_inhibitor.activated,
+#idle_inhibitor:hover {
+  /* background: @selected; */
+  border-radius: 10px;
+}
+
+#workspaces button {
+  color: @foreground;
+  border-radius: 9px;
+  margin: 2px 0;
+  padding: 0 3px;
+  transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+  background: @active;
+  margin: 2px;
+  padding: 0 6px;
+}
+
+#workspaces button:hover {
+  background: @selected;
+}
+
+#window {
+  margin-left: 0;
+}
+
+#network {
+  font-size: 13px;
+}
+
+#tray {
+  padding: 0 6px;
+}
+
+#tray menu {
+  border-radius: 10px;
+  background: @background;
+}
+
+#tray menu menuitem {
+  border-radius: 8px;
+}
+
+#tray menu menuitem:hover {
+  background-color: @selected;
+}
+
+#privacy {
+  background-color: #005000;
+  border-radius: 6px;
+  padding: 0 6px;
+}
+
+#power-profiles-daemon {
+  padding-right: 6px;
+}
+
+#battery.warning {
+  color: @yellow;
+}
+
+#battery.critical {
+  color: @red;
+}
+
+#custom-power {
+  padding-left: 4px;
+  padding-right: 6px;
+  margin-right: 6px;
+  border-radius: 4px;
+}
+
+#custom-power:hover {
+  background: @selected;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Arch logo spacing */
+#custom-arch {
+  padding-left: 10px;
+  padding-right: 8px;
+  margin-right: 0;
+}
+
+/* Keep workspace spacing consistent */
+#workspaces {
+  margin-left: 0;
+  padding-left: 0;
+}
