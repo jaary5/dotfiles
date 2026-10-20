@@ -43,7 +43,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local fileManager = "thunar"
+local fileManager = "nautilus"
 local menu        = "walker"
 
 
@@ -65,7 +65,7 @@ local menu        = "walker"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("swaync")
-        hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
+    hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("waybar")
     hl.exec_cmd("walker --gapplication-service")
@@ -128,7 +128,8 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 8,
+        -- rounding       = 8,
+        rounding       = 0,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
@@ -257,7 +258,7 @@ hl.config({
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
-            natural_scroll = false,
+            natural_scroll = true,
         },
     },
 })
@@ -291,6 +292,7 @@ hl.bind(mainMod .. " + H", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
 
 
 -- -- Workspace navigation

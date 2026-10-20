@@ -1,4 +1,3 @@
-
 {
   "layer": "top",
   "position": "top",
@@ -7,16 +6,13 @@
   "passthrough": false,
   "gtk-layer-shell": true,
   "reload_style_on_change": true,
-  "height": 20,
-  "spacing": 3,
-
-
+  "height": 29,
+  "spacing": 2,
   "modules-left": [
-  "custom/arch",
-  "hyprland/workspaces",
-  "hyprland/window"
+    "custom/arch",
+    "hyprland/workspaces",
+    "hyprland/window"
   ],
-
   "modules-center": [
     "cpu",
     "memory",
@@ -24,51 +20,56 @@
     "clock#time",
     "clock#date"
   ],
-
   "modules-right": [
-    "network",
-    "bluetooth",
-    "tray",
+    "group/tray-expander",
     "privacy",
     "hyprland/language",
+    "network",
+    "bluetooth",
     "pulseaudio",
     "pulseaudio#microphone",
     "backlight",
     "idle_inhibitor",
     "power-profiles-daemon",
+    "disk",
     "battery",
     "custom/power"
   ],
-
-
   "custom/arch": {
-  "format": "",
-  "tooltip": false,
-  "on-click": "walker"
+    "format": "",
+    "tooltip": false,
+    "on-click": "walker"
   },
-
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "",
-      "deactivated": ""
-    },
-    "tooltip": true,
-    "tooltip-format-activated": "Idle inhibition ON — sleep prevented",
-    "tooltip-format-deactivated": "Idle inhibition OFF — normal sleep behavior"
-  },
-
   "hyprland/workspaces": {
     "disable-scroll": false,
     "tooltip": false,
+    "on-click": "activate",
     "on-scroll-up": "hyprctl dispatch workspace -1",
     "on-scroll-down": "hyprctl dispatch workspace +1",
     "sort-by-number": true,
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "0",
+      "active": "󱓻"
+    },
     "persistent-workspaces": {
-      "*": [1, 2, 3]
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
     }
   },
-
   "hyprland/window": {
     "format": "{}",
     "tooltip": false,
@@ -82,14 +83,12 @@
     "min-length": 3,
     "max-length": 40
   },
-
   "cpu": {
     "format": "󰻠 {usage}%",
     "interval": 5,
     "tooltip": true,
     "on-click": "kitty -e btop"
   },
-
   "memory": {
     "format": "󰘚 {percentage}%",
     "format-critical": "󰀪 {percentage}%",
@@ -101,20 +100,17 @@
     "tooltip-format": "Memory: {used:0.1f} GiB / {total:0.1f} GiB",
     "on-click": "kitty -e btop"
   },
-
   "temperature": {
     "format": " {temperatureC}°C",
     "critical-threshold": 80,
     "interval": 5,
     "tooltip": true
   },
-
   "clock#time": {
-    "format": "󱑂 {:%H:%M}",
+    "format": "󱑂 {:%I:%M %p}",
     "tooltip": true,
-    "tooltip-format": "12-hour time: {:%I:%M %p}"
+    "tooltip-format": "24-hour time: {:%H:%M}"
   },
-
   "clock#date": {
     "format": "󰨳 {:%a %d-%m}",
     "tooltip-format": "<tt>{calendar}</tt>",
@@ -132,34 +128,25 @@
       "on-scroll-down": "shift_down"
     }
   },
-
-  "network": {
-  "format-wifi": "",
-  "format-ethernet": "󰈀",
-  "format-disconnected": "󰖪",
-  "tooltip": true,
-  "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-  "tooltip-format-ethernet": "Ethernet: {ifname}",
-  "tooltip-format-disconnected": "Disconnected",
-  "on-click": "kitty -e wlctl"
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "tray"
+    ]
   },
-
-  "bluetooth": {
-  "format": "",
-  "format-disabled": "󰂲",
-  "format-off": "󰂲",
-  "format-connected": " {num_connections}",
-  "tooltip": true,
-  "tooltip-format": "{controller_alias}\n{status}",
-  "on-click": "blueman-manager",
-  "on-click-right": "bluetoothctl power off"
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
   },
-  
   "tray": {
     "icon-size": 13,
     "spacing": 8
   },
-
   "privacy": {
     "icon-spacing": 8,
     "icon-size": 14,
@@ -183,16 +170,38 @@
       }
     ]
   },
-
   "hyprland/language": {
     "format": "󰇧 {}",
     "format-en": "EN",
+    "tooltip": true,
+    "tooltip-format": "Layout: {long}",
     "on-click": "hyprctl switchxkblayout current next"
   },
-
+  "network": {
+    "format-wifi": "",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+    "tooltip": true,
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n⇣ {bandwidthDownBytes}  ⇡ {bandwidthUpBytes}",
+    "tooltip-format-ethernet": "Ethernet: {ifname} — {ipaddr}\n⇣ {bandwidthDownBytes}  ⇡ {bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "kitty -e nmtui"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-connected": "󰂱",
+    "tooltip": true,
+    "tooltip-format": "{controller_alias}\nStatus: {status}\nDevices connected: {num_connections}",
+    "tooltip-format-connected": "{controller_alias}\nStatus: {status}\nConnected devices ({num_connections}):\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "• {device_alias}",
+    "on-click": "blueman-manager",
+    "on-click-right": "bluetoothctl power off"
+  },
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "󰝟 {volume}%",
+    "format": "{icon}",
+    "format-muted": "󰝟",
     "format-icons": {
       "headphone": "󰋋",
       "default": [
@@ -208,7 +217,6 @@
     "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
   },
-
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "󰍬",
@@ -218,19 +226,28 @@
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
     "on-click-right": "pavucontrol"
   },
-
   "backlight": {
-    "format": "{icon} {percent}%",
+    "format": "{icon}",
     "format-icons": [
       "󰃞",
       "󰃟",
       "󰃠"
     ],
     "tooltip": true,
+    "tooltip-format": "Brightness: {percent}%",
     "on-scroll-up": "brightnessctl set +5%",
     "on-scroll-down": "brightnessctl set 5%-"
   },
-
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    },
+    "tooltip": true,
+    "tooltip-format-activated": "Idle inhibition ON — sleep prevented",
+    "tooltip-format-deactivated": "Idle inhibition OFF — normal sleep behavior"
+  },
   "power-profiles-daemon": {
     "format": "{icon}",
     "tooltip": true,
@@ -242,14 +259,23 @@
       "power-saver": ""
     }
   },
-
+  "disk": {
+    "interval": 30,
+    "path": "/",
+    "unit": "GB",
+    "format": "󰋊 {specific_used:0.0f}GB",
+    "tooltip": true,
+    "tooltip-format": "Used: {specific_used:0.1f}GB / {specific_total:0.1f}GB ({percentage_used}%)\nFree: {specific_free:0.1f}GB ({percentage_free}%)\nPath: {path}",
+    "on-click": "kitty -e ncdu -x /"
+  },
   "battery": {
     "states": {
       "warning": 30,
-      "critical": 20
+      "critical": 15
     },
     "format": "{icon} {capacity}%",
-    "format-charging": "󱘖 {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": " {capacity}%",
     "format-icons": [
       "󰂎",
       "󰁺",
@@ -264,15 +290,16 @@
       "󰁹"
     ],
     "tooltip": true,
-    "tooltip-format": "Battery: {capacity}% — {time} remaining",
-    "interval": 5
+    "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower rate: {power:>1.0f}W",
+    "interval": 5,
+    "on-click": "~/.config/waybar/omarchy/scripts/battery-status.sh",
+    "on-click-right": "~/.config/waybar/omarchy/scripts/battery-status.sh"
   },
-
   "custom/power": {
     "format": "",
-    "tooltip": false,
+    "tooltip": true,
+    "tooltip-format": "Power menu (wlogout)",
     "on-click": "wlogout",
     "on-click-right": "wlogout"
   }
 }
-

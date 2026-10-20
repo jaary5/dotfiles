@@ -1,0 +1,10 @@
+/* Omarchy Profile Color Palette */
+@define-color background #181824;
+@define-color foreground #cdd6f4;
+@define-color accent #cba6f7;
+@define-color selected #313244;
+@define-color active #45475a;
+@define-color surface #1e1e2e;
+@define-color red #a55555;
+@define-color yellow #f9e2af;
+@define-color green #a6e3a1;

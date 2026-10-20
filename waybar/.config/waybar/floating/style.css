@@ -13,21 +13,39 @@ window#waybar {
   background: transparent;
 }
 
-window#waybar > box {
+
+/* For boxed-docked-shaped waybar */
+window#waybar>box {
   margin: 0;
-  padding: 0;
+  padding: 2px 8px;
+  background-color: @background;
+  /* border-radius: 10px; */
+  border-radius: 0px;
+  /* border: 2px solid @selected; */
+  opacity: 0.97;
+}
+
+/* 
+// For rounded-floating waybar
+window#waybar>box {
+  margin: 0;
+  padding: 2px 8px;
   background-color: @background;
   border-radius: 10px;
   border: 2px solid @selected;
   opacity: 0.97;
 }
+*/
+
 
 tooltip {
   background: @background;
   border: 1px solid @selected;
   border-radius: 10px;
+  padding: 4px 8px;
 }
 
+/* Consistent spacing across all modules */
 #idle_inhibitor,
 #workspaces,
 #window,
@@ -36,64 +54,69 @@ tooltip {
 #memory,
 #clock,
 #network,
+#bluetooth,
 #tray,
 #privacy,
 #language,
 #pulseaudio,
 #backlight,
 #power-profiles-daemon,
+#disk,
 #battery,
 #custom-power {
   opacity: 1;
-  padding: 0 2px;
-  margin: 0 3px;
-}
-
-#idle_inhibitor {
-  padding-left: 2px;
-  padding-right: 5px;
-  margin-left: 5px;
-  margin-right: 6px;
-  border-radius: 4px;
-  font-size: 13px;
+  padding: 0 5px;
+  margin: 0 2px;
 }
 
 #idle_inhibitor.activated,
 #idle_inhibitor:hover {
-  /* background: @selected; */
-  border-radius: 10px;
+  background: @selected;
+  border-radius: 8px;
+}
+
+#workspaces {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 #workspaces button {
   color: @foreground;
   border-radius: 9px;
   margin: 2px 0;
-  padding: 0 3px;
-  transition: all 0.3s ease;
+  padding: 0 4px;
+  min-width: 10px;
+  transition: all 0.2s ease;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
 }
 
 #workspaces button.active {
   background: @active;
+  color: @foreground;
+  opacity: 1;
   margin: 2px;
   padding: 0 6px;
 }
 
 #workspaces button:hover {
   background: @selected;
+  opacity: 1;
 }
 
 #window {
-  margin-left: 0;
+  margin-left: 2px;
 }
 
-#network {
-  font-size: 12px;
-  padding: 0 2px;
-  margin: 0 3px;
+#custom-expand-icon {
+  padding: 0 3px;
+  margin: 0 1px;
 }
 
 #tray {
-  padding: 0 6px;
+  padding: 0 4px;
 }
 
 #tray menu {
@@ -115,40 +138,27 @@ tooltip {
   padding: 0 6px;
 }
 
-#power-profiles-daemon {
-  padding-right: 6px;
+/* Battery clean styling (logo + percentage, no capsule box) */
+#battery.charging {
+  color: @green;
 }
 
-#battery.warning {
+#battery.warning:not(.charging) {
   color: @yellow;
 }
 
-#battery.critical {
+#battery.critical:not(.charging) {
   color: @red;
-}
-
-#custom-power {
-  padding-left: 4px;
-  padding-right: 6px;
-  margin-right: 6px;
-  border-radius: 4px;
 }
 
 #custom-power:hover {
   background: @selected;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
 /* Arch logo spacing */
 #custom-arch {
-  padding-left: 10px;
-  padding-right: 8px;
-  margin-right: 0;
-}
-
-/* Keep workspace spacing consistent */
-#workspaces {
-  margin-left: 0;
-  padding-left: 0;
+  padding-left: 4px;
+  padding-right: 6px;
 }
