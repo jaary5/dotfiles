@@ -23,6 +23,7 @@
   "modules-right": [
     "group/tray-expander",
     "privacy",
+    "custom/dnd",
     "hyprland/language",
     "network",
     "bluetooth",
@@ -169,6 +170,12 @@
         "name": "cava"
       }
     ]
+  },
+  "custom/dnd": {
+    "exec": "if dunstctl is-paused 2>/dev/null | rg -q true; then printf '{\"text\":\"󰂛\",\"class\":\"activated\",\"tooltip\":\"DND ON — notifications paused\"}\\n'; else printf '{\"text\":\"󰂚\",\"class\":\"deactivated\",\"tooltip\":\"DND OFF — notifications enabled\"}\\n'; fi",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "dunstctl set-paused toggle"
   },
   "hyprland/language": {
     "format": "󰇧 {}",

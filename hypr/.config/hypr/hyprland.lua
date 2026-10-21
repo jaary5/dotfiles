@@ -64,11 +64,11 @@ local menu        = "walker"
 -- 
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("swaync")
+    hl.exec_cmd("dunst")
     hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
-    hl.exec_cmd("waybar")
     hl.exec_cmd("walker --gapplication-service")
+    hl.exec_cmd("hyprpaper")
 end)
 
 
@@ -235,12 +235,6 @@ hl.config({
 })
 
 
--- Screenshot: select region and save automatically
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(
-  [[mkdir -p ~/pictures/screenshots && grim -g "$(slurp)" ~/pictures/screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png]]
-))
-
-
 ---------------
 ---- INPUT ----
 ---------------
@@ -287,12 +281,13 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 -- local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+-- hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + H", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("arcshot"))
 
 
 -- -- Workspace navigation
@@ -386,20 +381,20 @@ hl.bind("ALT + Tab", hl.dsp.window.swap({ next = true }))
 
 -- Copy and paste
 -- Send Ctrl+C to the focused application
-hl.bind("SUPER + C",
-    hl.dsp.send_shortcut({
-        mods = "CTRL",
-        key = "C",
-        window = "activewindow"
-    }))
+-- hl.bind("SUPER + C",
+--     hl.dsp.send_shortcut({
+--         mods = "CTRL",
+--         key = "C",
+--         window = "activewindow"
+--     }))
 
--- Send Ctrl+V to the focused application
-hl.bind("SUPER + V",
-    hl.dsp.send_shortcut({
-        mods = "CTRL",
-        key = "V",
-        window = "activewindow"
-    }))
+-- -- Send Ctrl+V to the focused application
+-- hl.bind("SUPER + V",
+--     hl.dsp.send_shortcut({
+--         mods = "CTRL",
+--         key = "V",
+--         window = "activewindow"
+--     }))
 
 
 -- Walker launcher
@@ -427,7 +422,7 @@ end
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+-- hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

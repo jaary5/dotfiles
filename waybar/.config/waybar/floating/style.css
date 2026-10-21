@@ -162,3 +162,18 @@ tooltip {
   padding-left: 4px;
   padding-right: 6px;
 }
+
+#custom-dnd {
+  padding: 0 5px;
+  margin: 0 2px;
+  opacity: 1;
+  min-width: 12px;
+}
+
+#custom-dnd.activated {
+  color: @red;
+}
+
+#custom-dnd.deactivated {
+  color: @foreground;
+}
