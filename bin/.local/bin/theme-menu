@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+THEME_SWITCH="$HOME/.local/bin/theme-switch"
+
+theme="$("$THEME_SWITCH" list | rofi -dmenu -i -p "Themes" -mesg "Select a desktop theme")"
+
+if [[ -z "$theme" ]]; then
+    exit 0
+fi
+
+exec "$THEME_SWITCH" "$theme"

@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES="$HOME/dotfiles"
+THEMES_DIR="$DOTFILES/themes"
+ACTIVE_DIR="$HOME/.config/theme-switcher/active"
+KITTY_CONFIG="$DOTFILES/kitty/.config/kitty/kitty.conf"
+WAYBAR_COLORS="$DOTFILES/waybar/.config/waybar/floating/colors.css"
+ROFI_CONFIG="$DOTFILES/rofi/.config/rofi/config.rasi"
+DUNST_HELPER="$DOTFILES/bin/.local/bin/theme-apply-dunst"
+
+usage() {
+    printf 'Usage:\n  theme-switch list\n  theme-switch THEME_NAME\n'
+}
+
+if [[ $# -ne 1 ]]; then
+    usage
+    exit 2
+fi
+
+if [[ "$1" == "list" ]]; then
+    for dir in "$THEMES_DIR"/*/; do
+        [[ -f "$dir/kitty.conf" &&
+           -f "$dir/waybar.css" &&
+           -f "$dir/rofi.rasi" &&
+           -f "$dir/dunst-colors.conf" &&
+           -f "$dir/wallpaper" ]] || continue
+        basename "$dir"
+    done
+    exit 0
+fi
+
+theme="$1"
+THEME_DIR="$THEMES_DIR/$theme"
+
+for file in kitty.conf waybar.css rofi.rasi dunst-colors.conf wallpaper; do
+    if [[ ! -f "$THEME_DIR/$file" ]]; then
+        printf 'Error: missing theme file: %s\n' "$THEME_DIR/$file" >&2
+        exit 1
+    fi
+done
+
+wallpaper="$(<"$THEME_DIR/wallpaper")"
+
+if [[ ! -f "$wallpaper" ]]; then
+    printf 'Error: wallpaper file not found: %s\n' "$wallpaper" >&2
+    exit 1
+fi
+
+if [[ ! -x "$DUNST_HELPER" ]]; then
+    printf 'Error: Dunst theme helper is missing or not executable.\n' >&2
+    exit 1
+fi
+
+rg -Fq 'include ~/.config/theme-switcher/active/kitty.conf' "$KITTY_CONFIG" || {
+    printf 'Error: Kitty active-theme include is missing.\n' >&2
+    exit 1
+}
+
+rg -Fq '@import url("../../theme-switcher/active/waybar.css");' "$WAYBAR_COLORS" || {
+    printf 'Error: Waybar active-theme import is missing.\n' >&2
+    exit 1
+}
+
+rg -Fq '@theme "~/.config/theme-switcher/active/rofi.rasi"' "$ROFI_CONFIG" || {
+    printf 'Error: Rofi active-theme directive is missing.\n' >&2
+    exit 1
+}
+
+mkdir -p "$ACTIVE_DIR"
+tmp_dir="$(mktemp -d "$ACTIVE_DIR/.theme-switch.XXXXXX")"
+trap 'rm -rf "$tmp_dir"' EXIT
+
+install -m 0644 "$THEME_DIR/kitty.conf" "$tmp_dir/kitty.conf"
+install -m 0644 "$THEME_DIR/waybar.css" "$tmp_dir/waybar.css"
+install -m 0644 "$THEME_DIR/rofi.rasi" "$tmp_dir/rofi.rasi"
+
+"$DUNST_HELPER" "$theme"
+
+mv "$tmp_dir/kitty.conf" "$ACTIVE_DIR/kitty.conf"
+mv "$tmp_dir/waybar.css" "$ACTIVE_DIR/waybar.css"
+mv "$tmp_dir/rofi.rasi" "$ACTIVE_DIR/rofi.rasi"
+
+if command -v dunstctl >/dev/null 2>&1; then
+    dunstctl reload || printf 'Warning: Dunst reload failed.\n' >&2
+fi
+
+pkill -SIGUSR2 waybar 2>/dev/null || true
+
+if ! hyprctl hyprpaper wallpaper ",${wallpaper},cover"; then
+    printf 'Warning: wallpaper change failed.\n' >&2
+fi
+
+printf 'Theme switched to: %s\n' "$theme"
+printf 'Wallpaper: %s\n' "$wallpaper"
+printf 'Kitty, Waybar, Rofi and Dunst theme files updated.\n'

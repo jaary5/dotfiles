@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Themes
+GenericName=Desktop Theme Switcher
+Comment=Switch desktop color themes
+Exec=sh -c "$HOME/.local/bin/theme-menu"
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Settings;DesktopSettings;

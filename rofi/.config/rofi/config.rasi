@@ -27,7 +27,7 @@ configuration{
     kb-move-char-forward: "Control+f";
     kb-mode-complete: "Control+o";
 }
-// @theme "~/.config/rofi/mocha.rasi"  // Replaced by theme-switcher
+// @theme "~/.config/theme-switcher/active/rofi.rasi"  // Replaced by theme-switcher
 
 // Theme colors (managed by theme-switcher)
-@theme "~/.config/rofi/mocha.rasi"
+@theme "~/.config/theme-switcher/active/rofi.rasi"
