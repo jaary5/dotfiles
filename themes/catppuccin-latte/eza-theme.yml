@@ -1,0 +1,15 @@
+colourful: true
+
+users:
+  user_you:
+    foreground: "#8839ef"
+  user_root:
+    foreground: "#d20f39"
+  user_other:
+    foreground: "#5c5f77"
+  group_yours:
+    foreground: "#8839ef"
+  group_root:
+    foreground: "#d20f39"
+  group_other:
+    foreground: "#6c6f85"

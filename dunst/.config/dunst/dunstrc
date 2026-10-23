@@ -9,7 +9,7 @@
     gap_size = 3
     transparency = 35
     frame_width = 1
-    frame_color = "#4f5b58"
+    frame_color = "#434c5e"
     font = "JetBrains Mono 10"
     corner_radius = 0
     min_icon_size = 32
@@ -22,21 +22,21 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    foreground = "#272e33"
-    background = "#a7c080"
-    frame_color = "#a7c080"
+    foreground = "#2e3440"
+    background = "#a3be8c"
+    frame_color = "#a3be8c"
     timeout = 3
 
 [urgency_normal]
-    foreground = "#d3c6aa"
-    background = "#374145"
-    frame_color = "#4f5b58"
+    foreground = "#eceff4"
+    background = "#3b4252"
+    frame_color = "#434c5e"
     timeout = 5
 
 [urgency_critical]
-    foreground = "#d3c6aa"
-    background = "#414b50"
-    frame_color = "#e67e80"
+    foreground = "#eceff4"
+    background = "#434c5e"
+    frame_color = "#bf616a"
     timeout = 15
 
     

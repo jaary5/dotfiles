@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Wallpaper Picker
+GenericName=Choose Desktop Wallpaper
+Comment=Browse and select wallpapers for the active theme
+Exec=sh -c "$HOME/.local/bin/wallpaper-menu"
+Icon=preferences-desktop-wallpaper
+Terminal=false
+Categories=Settings;DesktopSettings;

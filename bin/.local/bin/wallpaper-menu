@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES="$HOME/dotfiles"
+THEMES_DIR="$DOTFILES/themes"
+CONFIG_DIR="$HOME/.config/theme-switcher"
+THEME_SWITCH="$HOME/.local/bin/theme-switch"
+
+theme=""
+if [[ -s "$CONFIG_DIR/current-theme" ]]; then
+    theme="$(<"$CONFIG_DIR/current-theme")"
+else
+    theme="$("$THEME_SWITCH" list | rofi -dmenu -i -p "Theme" \
+        -mesg "Choose a theme's wallpapers")" || true
+fi
+
+[[ -n "$theme" ]] || exit 0
+
+theme_dir="$THEMES_DIR/$theme/wallpapers"
+if [[ ! -d "$theme_dir" ]]; then
+    notify-send "Wallpaper Picker" "Wallpaper folder not found for $theme" 2>/dev/null || true
+    exit 1
+fi
+
+cache_root="${XDG_CACHE_HOME:-$HOME/.cache}"
+mkdir -p "$cache_root"
+cache="$(mktemp -d "$cache_root/wallpaper-menu.XXXXXX")"
+trap 'rm -rf "$cache"' EXIT
+
+images=()
+while IFS= read -r -d '' image; do
+    images+=("$image")
+done < <(
+    find "$theme_dir" -maxdepth 1 -type f \
+        \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \
+           -o -iname '*.webp' -o -iname '*.bmp' \) -print0 |
+    sort -z
+)
+
+((${#images[@]} > 0)) || {
+    notify-send "Wallpaper Picker" "No supported wallpapers found for $theme" 2>/dev/null || true
+    exit 1
+}
+
+valid_images=()
+menu_input="$cache/menu"
+
+for image in "${images[@]}"; do
+    thumbnail="$cache/${#valid_images[@]}.png"
+
+    if magick "$image" -auto-orient -thumbnail '180x110^' \
+        -gravity center -extent 180x110 "$thumbnail" 2>/dev/null; then
+        valid_images+=("$image")
+        printf '%s\0icon\x1f%s\n' "$(basename "$image")" "$thumbnail" >> "$menu_input"
+    fi
+done
+
+((${#valid_images[@]} > 0)) || {
+    notify-send "Wallpaper Picker" "Could not generate wallpaper thumbnails" 2>/dev/null || true
+    exit 1
+}
+
+selection="$(rofi -dmenu -i -show-icons -format i \
+    -theme "$HOME/.config/rofi/wallpaper-grid.rasi" \
+    -p "Wallpaper" -mesg "Theme: $theme — select a thumbnail" \
+    < "$menu_input")" || true
+
+[[ "$selection" =~ ^[0-9]+$ ]] || exit 0
+(( selection < ${#valid_images[@]} )) || exit 1
+
+chosen="${valid_images[$selection]}"
+
+if hyprctl hyprpaper wallpaper ",${chosen},cover"; then
+    mkdir -p "$CONFIG_DIR"
+    printf '%s\n' "$chosen" > "$CONFIG_DIR/current-wallpaper"
+    notify-send "Wallpaper changed" "$(basename "$chosen")" 2>/dev/null || true
+else
+    printf 'Failed to apply wallpaper: %s\n' "$chosen" >&2
+    exit 1
+fi

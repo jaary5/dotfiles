@@ -2,14 +2,14 @@ colourful: true
 
 users:
   user_you:
-    foreground: "#f5c2e7"
+    foreground: "#8839ef"
   user_root:
-    foreground: "#f38ba8"
+    foreground: "#d20f39"
   user_other:
-    foreground: "#cba6f7"
+    foreground: "#5c5f77"
   group_yours:
-    foreground: "#cba6f7"
+    foreground: "#8839ef"
   group_root:
-    foreground: "#f38ba8"
+    foreground: "#d20f39"
   group_other:
-    foreground: "#9399b2"
+    foreground: "#6c6f85"
