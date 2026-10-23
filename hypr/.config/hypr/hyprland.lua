@@ -44,7 +44,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "nautilus"
-local menu        = "walker"
+local menu        = "rofi -show drun"
 
 
 -------------------
@@ -67,7 +67,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dunst")
     hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
-    hl.exec_cmd("walker --gapplication-service")
     hl.exec_cmd("hyprpaper")
 end)
 
@@ -397,12 +396,10 @@ hl.bind("ALT + Tab", hl.dsp.window.swap({ next = true }))
 --     }))
 
 
--- Walker launcher
--- Open Walker when tapping the Super key alone
+-- Rofi launcher
+-- Toggle Rofi when tapping Super alone
 hl.bind("SUPER + SUPER_L",
-    hl.dsp.exec_cmd("walker"),
-    { release = true })
-
+    hl.dsp.exec_cmd("rofi-toggle"))
     
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))

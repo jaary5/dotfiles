@@ -39,7 +39,7 @@
   "custom/arch": {
     "format": "",
     "tooltip": false,
-    "on-click": "walker"
+    "on-click": "rofi -show drun"
   },
   "hyprland/workspaces": {
     "disable-scroll": false,
