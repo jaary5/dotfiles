@@ -5,7 +5,6 @@
 **Runtime state:** `~/.config/theme-switcher/`\
 **Configuration manager:** GNU Stow\
 **Session:** Arch Linux + Hyprland\
-**Last updated:** 2026-10-23
 
 This guide documents the current theme system, its architecture,
 responsibilities, known dependencies, operation, troubleshooting, and
@@ -38,27 +37,15 @@ The system is designed around a few important rules:
 
 ### Source files versus generated files
 
-  ----------------------------------------------------------------------------------------------
-  Path                                           Purpose                 Ownership
-  ---------------------------------------------- ----------------------- -----------------------
-  `~/dotfiles/themes/`                           Theme source files and  Git
-                                                 wallpapers              
-
-  `~/dotfiles/bin/.local/bin/`                   Theme and wallpaper     Git; deployed with Stow
-                                                 scripts                 
-
-  `~/.local/bin/`                                Symlinks to scripts     GNU Stow
-
-  `~/.config/theme-switcher/active/`             Generated active app    `theme-switch`
-                                                 configuration           
-
-  `~/.config/theme-switcher/current-theme`       Selected theme name     `theme-switch`
-
-  `~/.config/theme-switcher/current-wallpaper`   Last selected wallpaper `theme-switch`
-                                                 path                    
-
-  `~/.config/eza/theme.yml`                      Active Eza theme        `theme-switch`
-  ----------------------------------------------------------------------------------------------
+| Path | Purpose | Ownership |
+|---|---|---|
+| `~/dotfiles/themes/` | Theme source files and wallpapers | Git |
+| `~/dotfiles/bin/.local/bin/` | Theme and wallpaper scripts | Git; deployed with Stow |
+| `~/.local/bin/` | Symlinks to scripts | GNU Stow |
+| `~/.config/theme-switcher/active/` | Generated active app configuration | `theme-switch` |
+| `~/.config/theme-switcher/current-theme` | Selected theme name | `theme-switch` |
+| `~/.config/theme-switcher/current-wallpaper` | Last selected wallpaper path | `theme-switch` |
+| `~/.config/eza/theme.yml` | Active Eza theme | `theme-switch` |
 
 Do not manually edit generated files in
 `~/.config/theme-switcher/active/`. Edit the source in `~/dotfiles/` and
@@ -127,35 +114,15 @@ the central `~/dotfiles/themes/<name>/wallpapers/` folders.
 
 ## 3. What the theme system controls
 
-  -------------------------------------------------------------------------------------
-  Component         Theme source          What it controls  Application mechanism
-  ----------------- --------------------- ----------------- ---------------------------
-  Kitty             `kitty.conf`          Terminal colors   Active config is
-                                                            generated/copied for Kitty
-
-  Waybar            `waybar.css`          Bar colors and    Active stylesheet is
-                                          styling           updated; Waybar receives a
-                                                            reload signal
-
-  Rofi              `rofi.rasi`           Launcher/menu     Active Rofi theme is
-                                          appearance        updated and consumed by
-                                                            Rofi
-
-  Dunst             `dunst-colors.conf`   Notification      `theme-apply-dunst` applies
-                                          colors            colors; Dunst is reloaded
-
-  Starship          `starship.toml`       Shell prompt      Active TOML is selected
-                                          colors and style  through `STARSHIP_CONFIG`
-
-  Eza               `eza-theme.yml`       Eza color         Active theme is installed
-                                          styling,          at
-                                          including         `~/.config/eza/theme.yml`
-                                          owner/group       
-                                          colors            
-
-  Wallpaper         `wallpapers/*`        Desktop           `hyprctl` sends the
-                                          background        selected image to Hyprpaper
-  -------------------------------------------------------------------------------------
+| Component | Theme source | What it controls | Application mechanism |
+|---|---|---|---|
+| Kitty | `kitty.conf` | Terminal colors | Active config is generated/copied for Kitty |
+| Waybar | `waybar.css` | Bar colors and styling | Active stylesheet is updated; Waybar receives a reload signal |
+| Rofi | `rofi.rasi` | Launcher/menu appearance | Active Rofi theme is updated and consumed by Rofi |
+| Dunst | `dunst-colors.conf` | Notification colors | `theme-apply-dunst` applies colors; Dunst is reloaded |
+| Starship | `starship.toml` | Shell prompt colors and style | Active TOML is selected through `STARSHIP_CONFIG` |
+| Eza | `eza-theme.yml` | Eza color styling, including owner/group colors | Active theme is installed at `~/.config/eza/theme.yml` |
+| Wallpaper | `wallpapers/*` | Desktop background | `hyprctl` sends the selected image to Hyprpaper |
 
 Hyprland window borders, gaps, rounding, blur, shadows, and animations
 are **not confirmed as theme-switched** by the current script. They
@@ -229,11 +196,11 @@ The theme switcher prepares the active Starship config and adjusts its
 
 Known theme-to-palette mapping:
 
-  Theme                  Starship palette
-  ---------------------- -----------------------------
-  `catppuccin-latte`     `catppuccin_latte`
-  `gruvbox`              `gruvbox_dark`
-  Other current themes   `catppuccin_mocha` fallback
+| Theme | Starship palette |
+|---|---|
+| `catppuccin-latte` | `catppuccin_latte` |
+| `gruvbox` | `gruvbox_dark` |
+| Other current themes | `catppuccin_mocha` fallback |
 
 The source Starship configuration is Stow-managed at:
 
@@ -409,33 +376,28 @@ it before uninstalling packages.
 
 ### Core runtime dependencies
 
-  Dependency               Purpose
-  ------------------------ -------------------------------------------
-  Hyprland and `hyprctl`   Session and IPC; sends wallpaper commands
-  Hyprpaper                Wallpaper daemon
-  Kitty                    Terminal and terminal theme
-  Waybar                   Status bar and stylesheet
-  Rofi                     Theme and wallpaper menus
-  Dunst and `dunstctl`     Notification daemon and reload
-  Starship                 Shell prompt
-  Eza                      Enhanced directory listing and theme
-  Zsh                      Shell initialization for Starship
-  GNU Stow                 Deploys configuration and script symlinks
-  Bash                     Runs the theme scripts
+| Dependency | Purpose |
+|---|---|
+| Hyprland and `hyprctl` | Session and IPC; sends wallpaper commands |
+| Hyprpaper | Wallpaper daemon |
+| Kitty | Terminal and terminal theme |
+| Waybar | Status bar and stylesheet |
+| Rofi | Theme and wallpaper menus |
+| Dunst and `dunstctl` | Notification daemon and reload |
+| Starship | Shell prompt |
+| Eza | Enhanced directory listing and theme |
+| Zsh | Shell initialization for Starship |
+| GNU Stow | Deploys configuration and script symlinks |
+| Bash | Runs the theme scripts |
 
 ### Wallpaper picker dependencies
 
-  -----------------------------------------------------------------------
-  Dependency                          Purpose
-  ----------------------------------- -----------------------------------
-  ImageMagick                         Generates wallpaper thumbnails
-
-  Rofi                                Displays the thumbnail grid
-
-  Hyprpaper                           Displays the chosen wallpaper
-
-  `find` and standard shell utilities Discover files and manipulate paths
-  -----------------------------------------------------------------------
+| Dependency | Purpose |
+|---|---|
+| ImageMagick | Generates wallpaper thumbnails |
+| Rofi | Displays the thumbnail grid |
+| Hyprpaper | Displays the chosen wallpaper |
+| `find` and standard shell utilities | Discover files and manipulate paths |
 
 The scripts use standard utilities such as `cp`, `mkdir`, `printf`,
 `sed`, `find`, `command`, and `pkill`.
@@ -650,20 +612,20 @@ from `~/.config/theme-switcher/`.
 
 Before editing application files, define semantic colors consistently.
 
-  Semantic role        Intended use
-  -------------------- --------------------------------------
-  `base`               Main background
-  `mantle`             Secondary/darker background
-  `crust`              Deepest background
-  `text`               Primary foreground
-  `subtext`            Secondary foreground
-  `surface`            Elevated surface or inactive element
-  `overlay`            Borders, separators, muted controls
-  `blue`               Informational/accent color
-  `green`              Success
-  `yellow`             Warning
-  `red`                Error/destructive state
-  `purple` / `mauve`   Secondary accent
+| Semantic role | Intended use |
+|---|---|
+| `base` | Main background |
+| `mantle` | Secondary/darker background |
+| `crust` | Deepest background |
+| `text` | Primary foreground |
+| `subtext` | Secondary foreground |
+| `surface` | Elevated surface or inactive element |
+| `overlay` | Borders, separators, muted controls |
+| `blue` | Informational/accent color |
+| `green` | Success |
+| `yellow` | Warning |
+| `red` | Error/destructive state |
+| `purple` / `mauve` | Secondary accent |
 
 These are planning names, not a universal syntax accepted by all
 applications. Translate the palette into each application's native
