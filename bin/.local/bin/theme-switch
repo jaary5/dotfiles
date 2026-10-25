@@ -27,14 +27,46 @@ theme_valid() {
         rg -q .
 }
 
+# apply_wallpaper() {
+#     local image="$1"
+#     if ! hyprctl hyprpaper wallpaper ",${image},cover"; then
+#         printf 'Warning: wallpaper change failed: %s\n' "$image" >&2
+#         return 1
+#     fi
+#     mkdir -p "$CONFIG_DIR"
+#     printf '%s\n' "$image" > "$CONFIG_DIR/current-wallpaper"
+# }
+
 apply_wallpaper() {
     local image="$1"
+    local hyprpaper_config="$HOME/.config/hypr/hyprpaper.conf"
+    local tmp_config
+
+    mkdir -p "$CONFIG_DIR" "$(dirname "$hyprpaper_config")"
+
+    # Save the selected wallpaper.
+    printf '%s\n' "$image" > "$CONFIG_DIR/current-wallpaper"
+
+    # Prepare Hyprpaper's startup configuration.
+    tmp_config="$(mktemp "${hyprpaper_config}.XXXXXX")"
+
+    cat > "$tmp_config" <<EOF
+splash = false
+
+wallpaper {
+    monitor =
+    path = $image
+    fit_mode = cover
+}
+EOF
+
+    mv "$tmp_config" "$hyprpaper_config"
+
+    # Apply immediately if Hyprpaper is already running.
     if ! hyprctl hyprpaper wallpaper ",${image},cover"; then
         printf 'Warning: wallpaper change failed: %s\n' "$image" >&2
         return 1
     fi
-    mkdir -p "$CONFIG_DIR"
-    printf '%s\n' "$image" > "$CONFIG_DIR/current-wallpaper"
 }
 
 if [[ $# -ne 1 ]]; then

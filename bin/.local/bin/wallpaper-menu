@@ -22,10 +22,46 @@ if [[ ! -d "$theme_dir" ]]; then
     exit 1
 fi
 
+# cache_root="${XDG_CACHE_HOME:-$HOME/.cache}"
+# mkdir -p "$cache_root"
+# cache="$(mktemp -d "$cache_root/wallpaper-menu.XXXXXX")"
+# trap 'rm -rf "$cache"' EXIT
+
+# images=()
+# while IFS= read -r -d '' image; do
+#     images+=("$image")
+# done < <(
+#     find "$theme_dir" -maxdepth 1 -type f \
+#         \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \
+#            -o -iname '*.webp' -o -iname '*.bmp' \) -print0 |
+#     sort -z
+# )
+
+# ((${#images[@]} > 0)) || {
+#     notify-send "Wallpaper Picker" "No supported wallpapers found for $theme" 2>/dev/null || true
+#     exit 1
+# }
+
+# valid_images=()
+# menu_input="$cache/menu"
+
+# for image in "${images[@]}"; do
+#     thumbnail="$cache/${#valid_images[@]}.png"
+
+#     if magick "$image" -auto-orient -thumbnail '180x110^' \
+#         -gravity center -extent 180x110 "$thumbnail" 2>/dev/null; then
+#         valid_images+=("$image")
+#         printf '%s\0icon\x1f%s\n' "$(basename "$image")" "$thumbnail" >> "$menu_input"
+#     fi
+# done
+
+
 cache_root="${XDG_CACHE_HOME:-$HOME/.cache}"
-mkdir -p "$cache_root"
-cache="$(mktemp -d "$cache_root/wallpaper-menu.XXXXXX")"
-trap 'rm -rf "$cache"' EXIT
+cache="$cache_root/wallpaper-menu/$theme"
+mkdir -p "$cache"
+
+menu_input="$(mktemp "$cache/menu.XXXXXX")"
+trap 'rm -f "$menu_input"' EXIT
 
 images=()
 while IFS= read -r -d '' image; do
@@ -43,17 +79,23 @@ done < <(
 }
 
 valid_images=()
-menu_input="$cache/menu"
 
 for image in "${images[@]}"; do
-    thumbnail="$cache/${#valid_images[@]}.png"
+    filename="${image##*/}"
+    stamp="$(stat -c '%Y-%s' -- "$image")"
+    thumbnail="$cache/$filename.$stamp.png"
 
-    if magick "$image" -auto-orient -thumbnail '180x110^' \
-        -gravity center -extent 180x110 "$thumbnail" 2>/dev/null; then
-        valid_images+=("$image")
-        printf '%s\0icon\x1f%s\n' "$(basename "$image")" "$thumbnail" >> "$menu_input"
+    if [[ ! -s "$thumbnail" ]]; then
+        if ! magick "$image" -auto-orient -thumbnail '180x110^' \
+            -gravity center -extent 180x110 "$thumbnail" 2>/dev/null; then
+            continue
+        fi
     fi
+
+    valid_images+=("$image")
+    printf '%s\0icon\x1f%s\n' "$filename" "$thumbnail" >> "$menu_input"
 done
+
 
 ((${#valid_images[@]} > 0)) || {
     notify-send "Wallpaper Picker" "Could not generate wallpaper thumbnails" 2>/dev/null || true

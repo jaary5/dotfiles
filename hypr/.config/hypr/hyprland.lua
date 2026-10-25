@@ -69,7 +69,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hyprpaper")
     -- hl.exec_cmd("sleep 2 && theme-switch current")
-    hl.exec_cmd('bash -lc \'sleep 2; ~/.local/bin/theme-switch "$(cat ~/.config/theme-switcher/current-theme)"\'')
+    -- hl.exec_cmd('bash -lc \'sleep 2; ~/.local/bin/theme-switch "$(cat ~/.config/theme-switcher/current-theme)"\'')
 end)
 
 
@@ -300,75 +300,6 @@ hl.bind("CTRL + SUPER + left",  hl.dsp.focus({ workspace = "r-1" }))
 hl.bind("SHIFT + SUPER + right", hl.dsp.window.move({ workspace = "r+1" }))
 hl.bind("SHIFT + SUPER + left",  hl.dsp.window.move({ workspace = "r-1" }))
 
--- Dynamic GNOME-style workspaces
--- local function get_workspace_limits()
---     local current = hl.get_active_workspace()
---     if not current then
---         return nil, 1
---     end
-
---     local highest_used = 1
-
---     for _, ws in pairs(hl.get_workspaces()) do
---         local windows = hl.get_workspace_windows(ws.id)
-
---         if windows and #windows > 0 and ws.id > highest_used then
---             highest_used = ws.id
---         end
---     end
-
---     return current.id, highest_used
--- end
-
--- local function navigate_workspace(direction)
---     local current, highest_used = get_workspace_limits()
---     if not current then return end
-
---     local target = current + direction
-
---     -- Never go below workspace 1 or beyond the next available workspace
---     if target < 1 or target > highest_used + 1 then
---         return
---     end
-
---     hl.dispatch(hl.dsp.focus({
---         workspace = tostring(target)
---     }))
--- end
-
--- local function move_window_workspace(direction)
---     local current, highest_used = get_workspace_limits()
---     if not current then return end
-
---     local target = current + direction
-
---     if target < 1 or target > highest_used + 1 then
---         return
---     end
-
---     hl.dispatch(hl.dsp.window.move({
---         workspace = tostring(target),
---         follow = true
---     }))
--- end
-
--- hl.bind("CTRL + SUPER + right", function()
---     navigate_workspace(1)
--- end)
-
--- hl.bind("CTRL + SUPER + left", function()
---     navigate_workspace(-1)
--- end)
-
--- hl.bind("SHIFT + SUPER + right", function()
---     move_window_workspace(1)
--- end)
-
--- hl.bind("SHIFT + SUPER + left", function()
---     move_window_workspace(-1)
--- end)
--- dofile(os.getenv("HOME") .. "/.config/hypr/dynamic-workspaces.lua")
-
 
 -- Window management
 -- Toggle between tiled and floating
@@ -402,6 +333,7 @@ hl.bind("ALT + Tab", hl.dsp.window.swap({ next = true }))
 -- Toggle Rofi when tapping Super alone
 hl.bind("SUPER + SUPER_L",
     hl.dsp.exec_cmd("rofi-toggle"))
+
     
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
