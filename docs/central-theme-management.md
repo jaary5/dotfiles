@@ -213,23 +213,11 @@ Do not stow `themes/`. It is a central source directory read by the scripts, not
 
 If Stow reports a conflict, inspect the existing target before deleting or replacing anything. Do not blindly use `--adopt`.
 
-### Step 4 — Create runtime directories
+### Step 4 — Runtime directories
 
-Runtime state is outside the repository and should not be committed to Git:
+You do **not** need to create the theme-switcher runtime directories manually. After the configuration packages are stowed, the first theme application creates the required theme-switcher and Hyprpaper runtime directories and generates their state files.
 
-```bash
-mkdir -p ~/.config/theme-switcher/active
-mkdir -p ~/.config/gtk-3.0
-mkdir -p ~/.config/gtk-4.0
-```
-
-The wallpaper thumbnail cache is created by `wallpaper-menu` when it runs:
-
-```text
-~/.cache/wallpaper-menu/
-```
-
-You normally do not need to create it manually.
+The wallpaper thumbnail cache is also created automatically by `wallpaper-menu` when it runs. No manual directory creation is needed for the theme-switcher workflow.
 
 ### Step 5 — Initialize the theme state
 

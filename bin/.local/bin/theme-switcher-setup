@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+THEME_SWITCH="$HOME/.local/bin/theme-switch"
+DEFAULT_THEME="catppuccin-mocha"
+
+usage() {
+    printf 'Usage: theme-switcher-setup [THEME_NAME]\n'
+    printf 'Default theme: %s\n' "$DEFAULT_THEME"
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    usage
+    exit 0
+fi
+
+if [[ $# -gt 1 ]]; then
+    usage >&2
+    exit 2
+fi
+
+if [[ ! -x "$THEME_SWITCH" ]]; then
+    printf 'Error: theme-switch was not found or is not executable: %s\n' "$THEME_SWITCH" >&2
+    printf 'Make sure you cloned ~/dotfiles and ran: stow bin\n' >&2
+    exit 1
+fi
+
+theme="${1:-$DEFAULT_THEME}"
+
+if ! "$THEME_SWITCH" list | rg -Fxq -- "$theme"; then
+    printf 'Error: unknown theme: %s\n' "$theme" >&2
+    printf 'Available themes:\n' >&2
+    "$THEME_SWITCH" list >&2
+    exit 1
+fi
+
+printf 'Initializing theme-switcher with: %s\n' "$theme"
+exec "$THEME_SWITCH" "$theme"
