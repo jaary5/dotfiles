@@ -213,25 +213,24 @@ Do not stow `themes/`. It is a central source directory read by the scripts, not
 
 If Stow reports a conflict, inspect the existing target before deleting or replacing anything. Do not blindly use `--adopt`.
 
-### Step 4 — Runtime directories
+### Step 4 — Initialization (Creates required directories outside of `~/dotfiles`)
 
-You do **not** need to create the theme-switcher runtime directories manually. After the configuration packages are stowed, the first theme application creates the required theme-switcher and Hyprpaper runtime directories and generates their state files.
-
-The wallpaper thumbnail cache is also created automatically by `wallpaper-menu` when it runs. No manual directory creation is needed for the theme-switcher workflow.
-
-### Step 5 — Initialize the theme state
-
-Choose a theme that exists under `~/dotfiles/themes/` and apply it:
+You do **not** need to create the theme-switcher runtime directories manually. 
 
 ```bash
-theme-switch catppuccin-mocha
+theme-switcher-setup        # Initialize everything 
+````
+
+After this, you can immediately use `theme-switch`, `wallpaper-menu` and the rest of your setup.
+
+Setup script accepts an additional argument(a theme name), so you can initialize directly with any theme
+
+```bash
+theme-switcher-setup nord
 ```
+If no theme is specified, it defaults to `catppuccin-mocha`
 
-This should create or update the current-theme state, generated active files and wallpaper state through the normal switcher workflow.
-
-If the switcher expects `current-theme` or `current-wallpaper` to exist before the first run, inspect its initialization logic and create only the missing state in the format it expects. Do not guess a wallpaper path.
-
-### Step 6 — Check wallpaper startup configuration
+### Step 5 — Check wallpaper startup configuration
 
 Hyprpaper uses:
 
@@ -241,7 +240,7 @@ Hyprpaper uses:
 
 The saved wallpaper and this configuration must agree so Hyprpaper can load the last selected wallpaper at login without a delayed theme-switch command. Confirm that the file points to a real image in the selected theme's wallpaper directory.
 
-### Step 7 — Start the desktop and verify
+### Step 6 — Start the desktop and verify
 
 After logging into Hyprland, check:
 
