@@ -68,6 +68,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hyprpaper")
+    -- hl.exec_cmd("sleep 2 && theme-switch current")
+    hl.exec_cmd('bash -lc \'sleep 2; ~/.local/bin/theme-switch "$(cat ~/.config/theme-switcher/current-theme)"\'')
 end)
 
 

@@ -1,4 +1,5 @@
-@import "./colors.css";
+/* @import "./colors.css"; */
+@import url("/home/jaary5/.config/theme-switcher/active/waybar.css");
 
 * {
   border: none;
