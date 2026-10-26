@@ -290,6 +290,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("arcshot"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock")) -- Lock screen
 
 
 -- -- Workspace navigation
