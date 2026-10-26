@@ -13,16 +13,22 @@ if len(sys.argv) != 2:
 theme = sys.argv[1]
 root = Path.home() / "dotfiles"
 source = root / "themes" / theme / "dunst-colors.conf"
-config = root / "dunst/.config/dunst/dunstrc"
+base_config = root / "dunst/.config/dunst/dunstrc"
+active_dir = Path.home() / ".config/theme-switcher/active"
+active_config = active_dir / "dunstrc"
 
 if not source.is_file():
     print(f"Theme colors not found: {source}", file=sys.stderr)
     sys.exit(1)
 
+if not base_config.is_file():
+    print(f"Base Dunst config not found: {base_config}", file=sys.stderr)
+    sys.exit(1)
+
 colors = configparser.ConfigParser(interpolation=None)
 colors.read(source)
 
-text = config.read_text()
+text = base_config.read_text()
 section = None
 lines = text.splitlines(keepends=True)
 
@@ -46,14 +52,15 @@ for i, line in enumerate(lines):
             )
 
 updated = "".join(lines)
+active_dir.mkdir(parents=True, exist_ok=True)
 fd, temp_name = tempfile.mkstemp(
-    prefix=".dunstrc.", dir=str(config.parent), text=True
+    prefix=".dunstrc.", dir=str(active_dir), text=True
 )
 try:
     with os.fdopen(fd, "w") as handle:
         handle.write(updated)
-    os.chmod(temp_name, config.stat().st_mode)
-    os.replace(temp_name, config)
+    os.chmod(temp_name, base_config.stat().st_mode)
+    os.replace(temp_name, active_config)
 except Exception:
     try:
         os.unlink(temp_name)
