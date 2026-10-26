@@ -134,8 +134,8 @@ hl.config({
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
-        active_opacity   = 0.85,
-        inactive_opacity = 0.75,
+        active_opacity   = 0.9,
+        inactive_opacity = 0.8,
         fullscreen_opacity = 1.0,
 
         shadow = {
@@ -290,7 +290,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("arcshot"))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock")) -- Lock screen
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock")) -- Lock screen
 
 
 -- -- Workspace navigation
