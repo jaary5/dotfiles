@@ -20,6 +20,7 @@ theme_valid() {
        -f "$dir/waybar.css" &&
        -f "$dir/rofi.rasi" &&
        -f "$dir/dunst-colors.conf" &&
+       -f "$dir/hyprlock-colors.conf" &&
        -d "$dir/wallpapers" ]] || return 1
     find "$dir/wallpapers" -maxdepth 1 -type f \
         \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \
@@ -129,6 +130,7 @@ trap 'rm -rf "$tmp_dir"' EXIT
 install -m 0644 "$THEME_DIR/kitty.conf" "$tmp_dir/kitty.conf"
 install -m 0644 "$THEME_DIR/waybar.css" "$tmp_dir/waybar.css"
 install -m 0644 "$THEME_DIR/rofi.rasi" "$tmp_dir/rofi.rasi"
+install -m 0644 "$THEME_DIR/hyprlock-colors.conf" "$tmp_dir/hyprlock-colors.conf"
 
 # Generate Dunst's active config from the tracked base without editing it.
 "$DUNST_HELPER" "$theme"
@@ -136,6 +138,7 @@ install -m 0644 "$THEME_DIR/rofi.rasi" "$tmp_dir/rofi.rasi"
 mv "$tmp_dir/kitty.conf" "$ACTIVE_DIR/kitty.conf"
 mv "$tmp_dir/waybar.css" "$ACTIVE_DIR/waybar.css"
 mv "$tmp_dir/rofi.rasi" "$ACTIVE_DIR/rofi.rasi"
+mv "$tmp_dir/hyprlock-colors.conf" "$ACTIVE_DIR/hyprlock-colors.conf"
 
 # Update Starship palette for selected theme.
 STARSHIP_SOURCE="$DOTFILES/starship/.config/starship.toml"
@@ -172,4 +175,4 @@ apply_wallpaper "$wallpaper" || true
 
 printf 'Theme switched to: %s\n' "$theme"
 printf 'Random wallpaper: %s\n' "$wallpaper"
-printf 'Kitty, Waybar, Rofi and Dunst theme files updated.\n'
+printf 'Kitty, Waybar, Rofi, Dunst and Hyprlock theme files updated.\n'
