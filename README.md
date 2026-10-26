@@ -1,4 +1,4 @@
-<h1 align="center">Jaary's Dotfiles</h1>
+<h1 align="center">jaary's Dotfiles</h1>
 
 <p align="center">
   <b>Arch Linux · Hyprland · Zsh · GNU Stow</b><br>
@@ -18,17 +18,37 @@
 </div>
 
 ---
-
-## Preview
+<table align="center">
+  <tr>
+    <td colspan="2" align="center">
+      <img src="screenshots/general.png" width="100%"><br>
+      <sub><b>General</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/hyprlock.png" width="100%"><br>
+      <sub><b>Hyprlock</b></sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/rofi.png" width="100%"><br>
+      <sub><b>Rofi</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/wallpaper-picker.png" width="100%"><br>
+      <sub><b>Wallpaper Picker</b></sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/theme-picker.png" width="100%"><br>
+      <sub><b>Theme Picker</b></sub>
+    </td>
+  </tr>
+</table>
 
 The desktop is designed around a consistent, square-edged interface. The theme switcher coordinates application colors and wallpapers from one theme library.
 
-| Theme | Theme | Theme |
-|:---:|:---:|:---:|
-| Catppuccin Mocha | Catppuccin Latte | Everforest |
-| Gruvbox | Nord | Tokyo Night |
-
-> Screenshots will be added here as the desktop preview set is captured.
 
 ## Navigation
 
