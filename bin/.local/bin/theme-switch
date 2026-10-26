@@ -27,29 +27,15 @@ theme_valid() {
         rg -q .
 }
 
-# apply_wallpaper() {
-#     local image="$1"
-#     if ! hyprctl hyprpaper wallpaper ",${image},cover"; then
-#         printf 'Warning: wallpaper change failed: %s\n' "$image" >&2
-#         return 1
-#     fi
-#     mkdir -p "$CONFIG_DIR"
-#     printf '%s\n' "$image" > "$CONFIG_DIR/current-wallpaper"
-# }
-
 apply_wallpaper() {
     local image="$1"
-    local hyprpaper_config="$HOME/.config/hypr/hyprpaper.conf"
+    local hyprpaper_config="$ACTIVE_DIR/hyprpaper.conf"
     local tmp_config
 
-    mkdir -p "$CONFIG_DIR" "$(dirname "$hyprpaper_config")"
-
-    # Save the selected wallpaper.
+    mkdir -p "$ACTIVE_DIR"
     printf '%s\n' "$image" > "$CONFIG_DIR/current-wallpaper"
 
-    # Prepare Hyprpaper's startup configuration.
     tmp_config="$(mktemp "${hyprpaper_config}.XXXXXX")"
-
     cat > "$tmp_config" <<EOF
 splash = false
 
@@ -59,12 +45,14 @@ wallpaper {
     fit_mode = cover
 }
 EOF
-
     mv "$tmp_config" "$hyprpaper_config"
 
-    # Apply immediately if Hyprpaper is already running.
-    if ! hyprctl hyprpaper wallpaper ",${image},cover"; then
-        printf 'Warning: wallpaper change failed: %s\n' "$image" >&2
+    # Restart Hyprpaper so it reads the generated config, not the Stow-managed one.
+    if command -v hyprpaper >/dev/null 2>&1; then
+        pkill -x hyprpaper 2>/dev/null || true
+        hyprpaper --config "$hyprpaper_config" >/dev/null 2>&1 &
+    else
+        printf 'Warning: hyprpaper is not installed; wallpaper config was generated but not applied.\n' >&2
         return 1
     fi
 }
@@ -109,7 +97,7 @@ done < <(
            -o -iname '*.webp' -o -iname '*.bmp' \) -print0
 )
 
-if ((${#wallpapers[@]} == 0)); then
+if (("${#wallpapers[@]}" == 0)); then
     printf 'Error: no supported wallpapers in %s\n' "$THEME_DIR/wallpapers" >&2
     exit 1
 fi
@@ -142,6 +130,7 @@ install -m 0644 "$THEME_DIR/kitty.conf" "$tmp_dir/kitty.conf"
 install -m 0644 "$THEME_DIR/waybar.css" "$tmp_dir/waybar.css"
 install -m 0644 "$THEME_DIR/rofi.rasi" "$tmp_dir/rofi.rasi"
 
+# Generate Dunst's active config from the tracked base without editing it.
 "$DUNST_HELPER" "$theme"
 
 mv "$tmp_dir/kitty.conf" "$ACTIVE_DIR/kitty.conf"
@@ -167,11 +156,14 @@ esac
 
 sed -i "s/^palette = .*/palette = '$starship_palette'/" "$STARSHIP_ACTIVE"
 
-
 printf '%s\n' "$theme" > "$CONFIG_DIR/current-theme"
 
-if command -v dunstctl >/dev/null 2>&1; then
-    dunstctl reload || printf 'Warning: Dunst reload failed.\n' >&2
+# Restart Dunst with the generated config. Its config path stays outside the repo.
+if command -v dunst >/dev/null 2>&1; then
+    pkill -x dunst 2>/dev/null || true
+    dunst --config "$ACTIVE_DIR/dunstrc" >/dev/null 2>&1 &
+else
+    printf 'Warning: dunst is not installed; Dunst config was generated but not applied.\n' >&2
 fi
 
 pkill -SIGUSR2 waybar 2>/dev/null || true
