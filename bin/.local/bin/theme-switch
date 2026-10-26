@@ -97,7 +97,7 @@ done < <(
            -o -iname '*.webp' -o -iname '*.bmp' \) -print0
 )
 
-if (("${#wallpapers[@]}" == 0)); then
+if ((${#wallpapers[@]} == 0)); then
     printf 'Error: no supported wallpapers in %s\n' "$THEME_DIR/wallpapers" >&2
     exit 1
 fi
