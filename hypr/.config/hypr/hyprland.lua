@@ -29,7 +29,7 @@
 --    scale    = "auto",
 --})
 
--- For Thinkpad laptop
+-- For laptop
 -- hl.monitor({
 --     output = "eDP-1",
 --     mode = "1920x1080@60.05",
@@ -258,7 +258,7 @@ hl.config({
 
         follow_mouse = 1,
 
-        sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
+        sensitivity = -0.3, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
             natural_scroll = true,
