@@ -26,7 +26,7 @@ sudo pacman -S alsa-tools
 ### 2. Launch HDA Jack Retask
 
 ```bash
-sudo hdajackretask
+sudo hdajackretask      # Dont use sudo on hyprland
 ```
 
 ### 3. Select the codec
@@ -45,26 +45,14 @@ Realtek ALC897
 #### Pink Mic, Front side (Pin ID: 0x19)
 
 - ☑ Override
-- Connectivity: Jack
-- Location: Front
-- Device: Microphone
-- Jack: 3.5 mm
-- Color: Pink
-- Jack detection: Not present
-- Channel group: 3
-- Channel (in group): 30 & 31
+- Jack Detection: Not present
+- Leave rest of the settings whatever it offers
 
 #### Green Headphone, Front side (Pin ID: 0x1b)
 
 - ☑ Override
-- Connectivity: Jack
-- Location: Front
-- Device: Headphone
-- Jack: 3.5 mm
-- Color: Green
-- Jack detection: Not present
-- Channel group: 3
-- Channel (in group): 30 & 31
+- Jack Detection: Not present
+- Leave rest of the settings whatever it offers
 
 ### 6. Verify against the screenshot
 

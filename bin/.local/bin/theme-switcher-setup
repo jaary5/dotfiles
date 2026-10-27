@@ -27,7 +27,7 @@ fi
 
 theme="${1:-$DEFAULT_THEME}"
 
-if ! "$THEME_SWITCH" list | rg -Fxq -- "$theme"; then
+if ! "$THEME_SWITCH" list | rg -Fx -- "$theme" >/dev/null; then
     printf 'Error: unknown theme: %s\n' "$theme" >&2
     printf 'Available themes:\n' >&2
     "$THEME_SWITCH" list >&2

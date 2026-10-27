@@ -29,13 +29,21 @@
 --    scale    = "auto",
 --})
 
-hl.monitor({
-    output = "eDP-1",
-    mode = "1920x1080@60.05",
-    position = "0x0",
-    scale = 1.2,
-})
+-- For Thinkpad laptop
+-- hl.monitor({
+--     output = "eDP-1",
+--     mode = "1920x1080@60.05",
+--     position = "0x0",
+--     scale = 1.2,
+-- })
 
+-- For PC
+hl.monitor({
+    output = "HDMI-A-1",
+    mode = "1920x1080@60",
+    position = "0x0",
+    scale = 1,
+})
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -68,8 +76,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hyprpaper --config ~/.config/theme-switcher/active/hyprpaper.conf")
-    -- hl.exec_cmd("sleep 2 && theme-switch current")
-    -- hl.exec_cmd('bash -lc \'sleep 2; ~/.local/bin/theme-switch "$(cat ~/.config/theme-switcher/current-theme)"\'')
 end)
 
 
