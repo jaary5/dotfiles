@@ -26,7 +26,9 @@
     "custom/dnd",
     "hyprland/language",
     "network",
-    "bluetooth",
+    // "bluetooth",
+    // If 'custom/bluetooth' ever fails, fall back to 'bluetooth'       
+    "custom/bluetooth",
     "pulseaudio",
     "pulseaudio#microphone",
     "backlight",
@@ -190,32 +192,42 @@
   },
   "hyprland/language": {
     "format": "󰇧 {}",
-    "format-en": "EN",
+    "format-en": "US",
     "tooltip": true,
     "tooltip-format": "Layout: {long}",
     "on-click": "hyprctl switchxkblayout current next"
   },
   "network": {
-    "format-wifi": "",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰖪",
+    "format-wifi": " ",
+    "format-ethernet": "󰌗",
+    "format-disconnected": "󰖪 ",
     "tooltip": true,
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n⇣ {bandwidthDownBytes}  ⇡ {bandwidthUpBytes}",
     "tooltip-format-ethernet": "Ethernet: {ifname} — {ipaddr}\n⇣ {bandwidthDownBytes}  ⇡ {bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
-    "on-click": "kitty -e nmtui"
+    "on-click": "kitty -e wlctl"
   },
-  "bluetooth": {
-    "format": "",
-    "format-disabled": "󰂲",
-    "format-off": "󰂲",
-    "format-connected": "󰂱",
-    "tooltip": true,
-    "tooltip-format": "{controller_alias}\nStatus: {status}\nDevices connected: {num_connections}",
-    "tooltip-format-connected": "{controller_alias}\nStatus: {status}\nConnected devices ({num_connections}):\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "• {device_alias}",
+  /// If the custom/bluetooth ever fails, use this one
+  // "bluetooth": {
+  //   "format": "",
+  //   "format-disabled": "󰂲",
+  //   "format-off": "󰂲",
+  //   "format-connected": "󰂱",
+  //   "tooltip": true,
+  //   "tooltip-format": "{controller_alias}\nStatus: {status}\nDevices connected: {num_connections}",
+  //   "tooltip-format-connected": "{controller_alias}\nStatus: {status}\nConnected devices ({num_connections}):\n{device_enumerate}",
+  //   "tooltip-format-enumerate-connected": "• {device_alias}",
+  //   "on-click": "blueman-manager",
+  //   "on-click-right": "bluetoothctl power off"
+  // },
+  "custom/bluetooth": {
+    "exec": "if [ -d /sys/class/bluetooth ] && [ -n \"$(find /sys/class/bluetooth -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)\" ] && command -v bluetoothctl >/dev/null 2>&1; then s=\"$(bluetoothctl show 2>/dev/null)\"; if [ -n \"$s\" ]; then a=\"$(printf '%s\\n' \"$s\" | sed -n 's/^[[:space:]]*Alias: //p' | head -n1)\"; p=\"$(printf '%s\\n' \"$s\" | sed -n 's/^[[:space:]]*Powered: //p' | head -n1)\"; d=\"$(bluetoothctl devices Connected 2>/dev/null | sed 's/^Device [^ ]* //')\"; n=\"$(printf '%s\\n' \"$d\" | sed '/^[[:space:]]*$/d' | wc -l)\"; if [ \"$n\" -gt 0 ]; then i='󰂱'; else if [ \"$p\" = yes ]; then i=''; else i='󰂲'; fi; fi; a=\"$(printf '%s' \"$a\" | sed 's/\\\\/\\\\\\\\/g; s/\"/\\\\\"/g')\"; d=\"$(printf '%s' \"$d\" | sed 's/\\\\/\\\\\\\\/g; s/\"/\\\\\"/g; :a;N;$!ba;s/\\n/\\\\n• /g')\"; printf '{\"text\":\"%s\",\"tooltip\":\"%s\\nStatus: %s\\nDevices connected: %s%s\"}\\n' \"$i\" \"$a\" \"$p\" \"$n\" \"${d:+\\nConnected devices:\\n• $d}\"; fi; fi",
+    "interval": 5,
+    "return-type": "json",
+    "format": "{}",
     "on-click": "blueman-manager",
-    "on-click-right": "bluetoothctl power off"
+    "on-click-right": "bluetoothctl power off",
+    "escape": true
   },
   "pulseaudio": {
     "format": "{icon}",
@@ -249,9 +261,9 @@
   "backlight": {
     "format": "{icon}",
     "format-icons": [
-      "󰃞",
-      "󰃟",
-      "󰃠"
+      "󰃞 ",
+      "󰃟 ",
+      "󰃠 "
     ],
     "tooltip": true,
     "tooltip-format": "Brightness: {percent}%",
@@ -261,8 +273,8 @@
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": " ",
+      "deactivated": " "
     },
     "tooltip": true,
     "tooltip-format-activated": "Idle inhibition ON — sleep prevented",

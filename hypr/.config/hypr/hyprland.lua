@@ -76,6 +76,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar -c ~/.config/waybar/floating/config.jsonc -s ~/.config/waybar/floating/style.css")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hyprpaper --config ~/.config/theme-switcher/active/hyprpaper.conf")
+    hl.exec_cmd("hypridle")
 end)
 
 
