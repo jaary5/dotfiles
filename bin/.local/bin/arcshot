@@ -2,12 +2,12 @@
 import os
 import sys
 
-_package_path = os.path.expanduser("~/.local/lib/arcshot")
+package_dir = "/home/jaary5/.local/lib/arcshot"
 
-sys.path.insert(0, _package_path)
+sys.path.insert(0, package_dir)
 
 os.environ["PYTHONPATH"] = os.pathsep.join(
-    [p for p in [_package_path, os.environ.get("PYTHONPATH", "")] if p]
+    filter(None, [package_dir, os.environ.get("PYTHONPATH", "")])
 )
 
 from arcshot.__main__ import main
