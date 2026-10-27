@@ -32,7 +32,7 @@
     </td>
     <td align="center">
       <img src="screenshots/rofi.png" width="100%"><br>
-      <sub><b>Rofi</b></sub>
+      <sub><b>Rofi & Dunst</b></sub>
     </td>
   </tr>
   <tr>
@@ -43,6 +43,16 @@
     <td align="center">
       <img src="screenshots/theme-picker.png" width="100%"><br>
       <sub><b>Theme Picker</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/yazi.png" width="100%"><br>
+      <sub><b>Yazi File Manager</b></sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/btop.png" width="100%"><br>
+      <sub><b>BTOP Resource Monitor</b></sub>
     </td>
   </tr>
 </table>
