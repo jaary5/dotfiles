@@ -8,6 +8,7 @@
   "reload_style_on_change": true,
   "height": 29,
   "spacing": 2,
+
   "modules-left": [
     "custom/arch",
     "hyprland/workspaces",
@@ -23,9 +24,10 @@
   "modules-right": [
     "group/tray-expander",
     "privacy",
-    "custom/dnd",
     "hyprland/language",
     "network",
+    "custom/dnd",
+    "custom/night-light",
     // "bluetooth",
     // If 'custom/bluetooth' ever fails, fall back to 'bluetooth'       
     "custom/bluetooth",
@@ -38,42 +40,12 @@
     "battery",
     "custom/power"
   ],
+
   "custom/arch": {
     "format": "",
     "tooltip": false,
     "on-click": "rofi -show drun"
   },
-  // static omarchy style 
-  // "hyprland/workspaces": {
-  //   "disable-scroll": false,
-  //   "tooltip": false,
-  //   "on-click": "activate",
-  //   "on-scroll-up": "hyprctl dispatch workspace -1",
-  //   "on-scroll-down": "hyprctl dispatch workspace +1",
-  //   "sort-by-number": true,
-  //   "format": "{icon}",
-  //   "format-icons": {
-  //     "default": "",
-  //     "1": "1",
-  //     "2": "2",
-  //     "3": "3",
-  //     "4": "4",
-  //     "5": "5",
-  //     "6": "6",
-  //     "7": "7",
-  //     "8": "8",
-  //     "9": "9",
-  //     "10": "0",
-  //     "active": "󱓻"
-  //   },
-  //   "persistent-workspaces": {
-  //     "1": [],
-  //     "2": [],
-  //     "3": [],
-  //     "4": [],
-  //     "5": []
-  //   }
-  // },
   "hyprland/workspaces": {
     "format": "{name}",
     "tooltip": false,
@@ -97,6 +69,9 @@
     "min-length": 3,
     "max-length": 40
   },
+
+
+
   "cpu": {
     "format": "󰻠 {usage}%",
     "interval": 5,
@@ -142,6 +117,9 @@
       "on-scroll-down": "shift_down"
     }
   },
+
+
+
   "group/tray-expander": {
     "orientation": "inherit",
     "drawer": {
@@ -152,14 +130,6 @@
       "custom/expand-icon",
       "tray"
     ]
-  },
-  "custom/expand-icon": {
-    "format": "",
-    "tooltip": false
-  },
-  "tray": {
-    "icon-size": 13,
-    "spacing": 8
   },
   "privacy": {
     "icon-spacing": 8,
@@ -184,11 +154,13 @@
       }
     ]
   },
-  "custom/dnd": {
-    "exec": "if dunstctl is-paused 2>/dev/null | rg -q true; then printf '{\"text\":\"󰂛\",\"class\":\"activated\",\"tooltip\":\"DND ON — notifications paused\"}\\n'; else printf '{\"text\":\"󰂚\",\"class\":\"deactivated\",\"tooltip\":\"DND OFF — notifications enabled\"}\\n'; fi",
-    "return-type": "json",
-    "interval": 2,
-    "on-click": "dunstctl set-paused toggle"
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 13,
+    "spacing": 8
   },
   "hyprland/language": {
     "format": "󰇧 {}",
@@ -206,6 +178,21 @@
     "tooltip-format-ethernet": "Ethernet: {ifname} — {ipaddr}\n⇣ {bandwidthDownBytes}  ⇡ {bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "kitty -e wlctl"
+  },
+  "custom/dnd": {
+    "exec": "if dunstctl is-paused 2>/dev/null | rg -q true; then printf '{\"text\":\"󰂛\",\"class\":\"activated\",\"tooltip\":\"DND ON — notifications paused\"}\\n'; else printf '{\"text\":\"󰂚\",\"class\":\"deactivated\",\"tooltip\":\"DND OFF — notifications enabled\"}\\n'; fi",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "dunstctl set-paused toggle"
+  },
+  "custom/night-light": {
+    "exec": "if [[ -f \"$XDG_RUNTIME_DIR/night-light\" ]]; then echo '{\"text\":\"\",\"class\":\"on\"}'; else echo '{\"text\":\"\",\"class\":\"off\"}'; fi",
+    "interval": 2,
+    "return-type": "json",
+    "format": "{}",
+    "on-click": "night-light",
+    "tooltip": true,
+    "tooltip-format": "Toggle Night Light (5000K)"
   },
   /// If the custom/bluetooth ever fails, use this one
   // "bluetooth": {

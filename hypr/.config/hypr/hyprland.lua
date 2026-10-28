@@ -77,6 +77,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hyprpaper --config ~/.config/theme-switcher/active/hyprpaper.conf")
     hl.exec_cmd("hypridle")
+    hl.exec_cmd("hyprsunset")
 end)
 
 
@@ -298,6 +299,7 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("arcshot"))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock")) -- Lock screen
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("setsid -f night-light")) -- Night Light toggle
 
 
 -- -- Workspace navigation

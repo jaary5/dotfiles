@@ -64,6 +64,7 @@ tooltip {
 #power-profiles-daemon,
 #disk,
 #battery,
+#custom-night-light,
 #custom-power {
   opacity: 1;
   padding: 0 5px;
@@ -171,10 +172,18 @@ tooltip {
   min-width: 12px;
 }
 
+
 #custom-dnd.activated {
   color: @red;
 }
 
 #custom-dnd.deactivated {
-  color: @foreground;
+  color: @foreground; 
 }
+
+#custom-night-light.off {
+  text-decoration: line-through;
+  text-decoration-style: wavy;
+  /* color: #6c7086; */
+}
+
