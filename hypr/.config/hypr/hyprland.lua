@@ -342,8 +342,9 @@ hl.bind("ALT + Tab", hl.dsp.window.swap({ next = true }))
 
 -- Rofi launcher
 -- Toggle Rofi when tapping Super alone
-hl.bind("SUPER + SUPER_L",
-    hl.dsp.exec_cmd("rofi-toggle"))
+-- hl.bind("SUPER + SUPER_L",
+--     hl.dsp.exec_cmd("rofi-toggle"))
+hl.bind("SUPER + SUPER_L", hl.dsp.exec_cmd("rofi-toggle"), { release = true })  --updated for hyprland 0.57
 
     
 -- Move focus with mainMod + arrow keys
