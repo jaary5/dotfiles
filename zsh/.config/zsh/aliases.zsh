@@ -3,7 +3,7 @@
 # =========================================================
 
 # Better ls
-alias ls='eza --icons'
+alias ls='eza --icons=auto'
 alias ll='eza -lh --icons --git'
 alias la='eza -lah --icons --git'
 alias tree='eza --tree --icons'
