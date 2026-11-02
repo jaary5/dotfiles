@@ -80,6 +80,7 @@ The desktop is designed around a consistent, square-edged interface. The theme s
   - [Yazi](#yazi)
   - [MPV](#mpv)
   - [Arcshot](#arcshot)
+  - [Prayer times](#prayer-times)
   - [Custom scripts](#custom-scripts)
 - [Themes](#themes)
 - [Dependencies](#dependencies)
@@ -218,6 +219,7 @@ The main modifier is **Super** (Windows key).
 | <kbd>Super</kbd> | Toggle Rofi using `rofi-toggle` |
 | <kbd>Super</kbd> + <kbd>Enter</kbd> | Open Kitty |
 | <kbd>Super</kbd> + <kbd>H</kbd> | Open Nautilus |
+| <kbd>Super</kbd> + <kbd>N</kbd> | Night-light using `hyprsunset` |
 | <kbd>Super</kbd> + <kbd>R</kbd> | Open Rofi application launcher |
 | <kbd>Super</kbd> + <kbd>B</kbd> | Open Brave |
 | <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> | Launch Arcshot |
@@ -453,6 +455,7 @@ Useful aliases include:
 | `yz` | `yazi` |
 | `kh` | `kitty-hotkeys` |
 | `ta` | `toggle-audio` |
+| `pt` | `prayer-times` |
 
 > Note: `grep` is aliased to ripgrep (`rg`), so use ripgrep options and syntax in interactive Zsh sessions.
 
@@ -488,6 +491,20 @@ Arcshot is the screenshot and screen-recording workflow launched from Hyprland.
 
 The launcher points Python to the Arcshot package installed under `~/.local/lib/arcshot`. The active keybinding is <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>.
 
+## Prayer times
+
+Terminal-based prayer times utility for Dhaka, Bangladesh.
+
+**Script:** [`prayer-times`](./bin/.local/bin/prayer-times) fetches monthly prayer-time data from the `AlAdhan` API using the Karachi calculation method and Hanafi Asr setting. It caches the API response in `~/.cache/prayer-times/` for 12 hours to avoid unnecessary requests. At startup, it retrieves today's prayer timings from the cached data (or fetches fresh data when the cache expires).
+
+On a fresh installatino, cache directory  and monthly data file is created automatically at first execution.
+
+**Usage:**
+
+```bash
+prayer-times    # alias is set to 'pt'
+```
+
 ## Custom scripts
 
 Personal scripts are stored in `bin/.local/bin/` and are linked into `~/.local/bin/` through the `bin` Stow package.
@@ -503,9 +520,9 @@ Personal scripts are stored in `bin/.local/bin/` and are linked into `~/.local/b
 | `toggle-audio` | Audio toggle helper |
 | `arcshot` | Launch Arcshot |
 | `kitty-hotkeys` | Display Kitty shortcut help |
-| `disk` | Disk usage report and interactive cleanup menu |
+| `ncdu` , `disk` | Disk usage report and interactive cleanup menu |
+| `prayer-times` | Terminal-based prayer times utility |
 
-The disk utility reports filesystem usage, cache sizes, journal usage and large directories. Cleanup actions require confirmation; review each prompt carefully.
 
 ## Themes
 
@@ -547,6 +564,7 @@ The repository does not currently provide a single authoritative package manifes
 | Hyprland | Wayland compositor |
 | Hyprlock | Lock screen |
 | Hyprpaper | Wallpaper daemon |
+| Hyprsunset | Night Light |
 | Waybar | Status bar |
 | Rofi | Launcher and menus |
 | Dunst | Notification daemon |

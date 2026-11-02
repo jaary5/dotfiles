@@ -20,6 +20,7 @@
     "temperature",
     "clock#time",
     "clock#date"
+    // "custom/prayer-calendar"
   ],
   "modules-right": [
     "group/tray-expander",
@@ -117,6 +118,14 @@
       "on-scroll-down": "shift_down"
     }
   },
+  // "custom/prayer-calendar": {
+  // "exec": "prayer-waybar",
+  // "return-type": "json",
+  // "interval": 60,
+  // "format": " {}",
+  // "tooltip": true,
+  // "escape": false
+  // },
 
 
 
