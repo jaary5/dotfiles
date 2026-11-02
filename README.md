@@ -7,11 +7,10 @@
 
 <div align="center">
 
-![Arch Linux](https://img.shields.io/badge/OS-Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
-![Hyprland](https://img.shields.io/badge/Compositor-Hyprland-58E1FF?style=for-the-badge)
-![Shell](https://img.shields.io/badge/Shell-Zsh-89E051?style=for-the-badge)
-![Dotfiles](https://img.shields.io/badge/Managed%20with-GNU%20Stow-333333?style=for-the-badge)
-![License](https://img.shields.io/badge/Config-Personal-8A7FFF?style=for-the-badge)
+[![Arch Linux](https://img.shields.io/badge/OS-Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)](https://archlinux.org/)
+[![Hyprland](https://img.shields.io/badge/Compositor-Hyprland-58E1FF?style=for-the-badge)](https://hypr.land/)
+[![Shell](https://img.shields.io/badge/Shell-Zsh-89E051?style=for-the-badge)](https://zsh.sourceforge.io/)
+[![Dotfiles](https://img.shields.io/badge/Managed%20with-GNU%20Stow-333333?style=for-the-badge)](https://www.gnu.org/software/stow/)
 
 [![Last commit](https://img.shields.io/github/last-commit/jaary5/dotfiles?style=for-the-badge&logo=github&label=Last%20updated)](https://github.com/jaary5/dotfiles/commits/main)
 
