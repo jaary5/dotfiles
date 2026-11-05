@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Arch Linux · Hyprland · Zsh · GNU Stow</b><br>
-  A lightweight, theme-aware desktop built around a centralized theme switcher.
+  A lightweight, theme-aware, square-edged desktop built around a centralized theme switcher.
 </p>
 
 <div align="center">
@@ -56,7 +56,6 @@
   </tr>
 </table>
 
-The desktop is designed around a consistent, square-edged interface. The theme switcher coordinates application colors and wallpapers from one theme library.
 
 
 ## Navigation
@@ -88,9 +87,8 @@ The desktop is designed around a consistent, square-edged interface. The theme s
 
 ## Overview
 
-This repository contains my personal Arch Linux and Hyprland configuration. It is intentionally modular: application configurations are organized as GNU Stow packages, while theme assets and helper scripts live in a shared repository.
+This repository contains my personal Arch Linux and Hyprland configuration. It is intentionally modular, application configurations are organized as GNU Stow packages while theme assets and helper scripts live in a shared repository.
 
-The goal is a cohesive, lightweight desktop rather than a prebuilt desktop-environment replacement.
 
 **Core components**
 
@@ -185,7 +183,7 @@ dotfiles/
 └── docs/                    # setup and troubleshooting notes
 ```
 
-The repository also contains older or alternative configuration directories (for example, Bash, GNOME and an Omarchy-derived Waybar layout). Their presence does not mean they are used by the current Hyprland session.
+The repository also contains my older or alternative configuration directories (for example, Bash, GNOME, keyd and an Omarchy-derived Waybar layout). Their presence does not mean they are used by the current Hyprland session. MY CONFIG MY RULES (wink wink).
 
 ## Detailed overview
 
@@ -200,9 +198,10 @@ The configuration uses Lua and defines the monitor, applications, autostart proc
 Current session autostart includes:
 
 - Dunst, using the generated theme-aware configuration.
-- Waybar, using the floating configuration.
+- Waybar, using the floating configuration(but it doesnt really float).
 - Hyprpolkitagent, for graphical privilege prompts.
 - Hyprpaper, using the generated active wallpaper configuration.
+- and many more .. .. . . .
 
 The configured applications include Kitty, Nautilus and Rofi. Brave is launched by its keybinding.
 
@@ -287,7 +286,7 @@ This keeps the lock screen coordinated with the selected desktop theme. The manu
 
 Waybar provides the desktop status bar.
 
-**Active configuration:** [floating/config.jsonc](./waybar/.config/waybar/floating/config.jsonc) · [floating/style.css](./waybar/.config/waybar/floating/style.css)
+**Configuration:** [`floating/config.jsonc`](./waybar/.config/waybar/floating/config.jsonc) · [`floating/style.css`](./waybar/.config/waybar/floating/style.css)
 
 The active session explicitly starts the **floating** layout. It uses a compact, square-edged style and theme colors imported from the generated active theme file.
 
@@ -297,7 +296,7 @@ The repository also contains an Omarchy-derived Waybar configuration for referen
 
 Rofi is used for the application launcher and menu interface.
 
-**Configuration:** [`config.rasi`](./rofi/.config/rofi/config.rasi) · [wallpaper grid](./rofi/.config/rofi/wallpaper-grid.rasi)
+**Configuration:** [`config.rasi`](./rofi/.config/rofi/config.rasi) · [`wallpaper-grid.rasi`](./rofi/.config/rofi/wallpaper-grid.rasi)
 
 Configured modes include application launching, window selection and command execution. The setup includes Vim-style navigation bindings and a dedicated thumbnail grid for choosing wallpapers.
 
