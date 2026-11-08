@@ -159,6 +159,13 @@ esac
 
 sed -i "s/^palette = .*/palette = '$starship_palette'/" "$STARSHIP_ACTIVE"
 
+# Set system color scheme with gsettings [dark/light]
+if [[ "$theme" == "catppuccin-latte" ]]; then
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+else
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+fi
+
 printf '%s\n' "$theme" > "$CONFIG_DIR/current-theme"
 
 # Restart Dunst with the generated config. Its config path stays outside the repo.
